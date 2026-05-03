@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The S.O.D.S — The Songs of Dire Straits</title>
+  <meta name="description" content="The S.O.D.S — Dire Straits reimagined for the stage. Live shows across Sydney and beyond.">
+
+  <style>
+    /* ============================================================
+       THE S.O.D.S — COMPLETE HOME PAGE
+       github.com/rwienburg/songsofdirestraits.github.io
+       ============================================================ */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --red:        #c42020;
+      --red-hover:  #e02828;
+      --black:      #0a0a0a;
+      --dark:       #0f0f0f;
+      --dark2:      #141414;
+      --white:      #ffffff;
+      --grey:       #a0a0a0;
+      --grey-dim:   rgba(160,160,160,0.5);
+      --border:     rgba(255,255,255,0.07);
+      --ease:       0.3s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    a { text-decoration: none; }
+
+    /* ---- Shared utilities ---- */
+
+    .inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .label {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+
+    .label::before { content: '— '; }
+
+    .h2 {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .body-text {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--grey);
+      max-width: 600px;
+    }
+
+    /* ---- Buttons ---- */
+
+    .btn {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      border: 2px solid var(--red);
+      background: var(--red);
+      color: var(--white);
+      transition: background var(--ease), color var(--ease);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--red);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: transparent;
+      color: var(--white);
+      transition: border-color var(--ease);
+    }
+
+    .btn-ghost:hover { border-color: var(--white); }
+
+    .btn-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white);
+      transition: color var(--ease);
+    }
+
+    .btn-text::after {
+      content: '→';
+      font-size: 14px;
+      transition: transform var(--ease);
+    }
+
+    .btn-text:hover { color: var(--red); }
+    .btn-text:hover::after { transform: translateX(4px); }
+
+    /* ---- Scroll reveal ---- */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+
+    /* ==========================================================
+       HEADER
+       ========================================================== */
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: rgba(0,0,0,0.93);
+      border-bottom: 1px solid var(--border);
+      z-index: 9999;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: background 0.3s ease;
+    }
+
+    .site-header.scrolled {
+      background: rgba(0,0,0,0.98);
+    }
+
+    .header-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    /* Logo */
+    .logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .logo-the {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      color: var(--grey);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .logo-name {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-name span { color: var(--red); }
+
+    /* Desktop nav */
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .site-nav li a {
+      display: block;
+      padding: 6px 12px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .site-nav li a::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .site-nav li a:hover { color: var(--white); }
+    .site-nav li a:hover::after { transform: scaleX(1); }
+    .site-nav li a.active { color: var(--white); }
+    .site-nav li a.active::after { transform: scaleX(1); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.97);
+      border-bottom: 1px solid var(--border);
+      list-style: none;
+      padding: 12px 0 20px;
+      z-index: 9998;
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .mobile-menu li a {
+      display: block;
+      padding: 14px 28px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mobile-menu li a:hover,
+    .mobile-menu li a.active {
+      color: var(--white);
+      border-left-color: var(--red);
+    }
+
+
+    /* ==========================================================
+       HERO
+       ========================================================== */
+
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 90px;
+      padding-top: 64px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.88) 45%, rgba(0,0,0,0.25) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.1) 50%),
+        linear-gradient(135deg, #1a0800 0%, #0a0f1a 45%, #0d0d0d 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Grain texture */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Vertical red line decoration */
+    .hero-line {
+      position: absolute;
+      left: 5%;
+      top: 18%;
+      width: 2px;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--red), transparent);
+      opacity: 0.5;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .hero-headline {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(44px, 7.5vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 28px;
+      max-width: 700px;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .hero-sub {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.7;
+      color: rgba(200,200,200,0.85);
+      max-width: 500px;
+      margin-bottom: 44px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+
+    /* ==========================================================
+       CREDIBILITY STRIP
+       ========================================================== */
+
+    .cred {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 0;
+    }
+
+    .cred-heading {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .cred-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 44px;
+    }
+
+    .cred-stat {
+      background: var(--dark);
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .cred-stat-value {
+      font-family: 'Georgia', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .cred-stat-value span { color: var(--red); }
+
+    .cred-stat-label {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      line-height: 1.5;
+    }
+
+    .cred-venues {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 12px;
+      color: var(--grey-dim);
+      text-align: center;
+      letter-spacing: 0.04em;
+      line-height: 1.9;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+
+    /* ==========================================================
+       POSITIONING
+       ========================================================== */
+
+    .position {
+      padding: 120px 0;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .position-bg-text {
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Georgia', serif;
+      font-size: clamp(80px, 14vw, 200px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.02);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .position-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .position-left {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .position-left::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--red), transparent);
+    }
+
+    .position-right {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+
+    /* ==========================================================
+       WATCH PREVIEW
+       ========================================================== */
+
+    .watch {
+      padding: 100px 0;
+      background: var(--dark);
+    }
+
+    .watch-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 52px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .watch-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 52px;
+    }
+
+    .video-card {
+      position: relative;
+      aspect-ratio: 16/9;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color var(--ease);
+      display: block;
+    }
+
+    .video-card:nth-child(1) { background: linear-gradient(135deg, #1a0505 0%, #0d0505 100%); }
+    .video-card:nth-child(2) { background: linear-gradient(135deg, #05101a 0%, #050d14 100%); }
+    .video-card:nth-child(3) { background: linear-gradient(135deg, #0f0a00 0%, #0a0800 100%); }
+
+    .video-card:hover { border-color: var(--red); }
+
+    .video-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+    }
+
+    .play-btn {
+      width: 52px;
+      height: 52px;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: border-color var(--ease), background var(--ease), transform var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-btn::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      border-left: 15px solid rgba(255,255,255,0.8);
+      margin-left: 3px;
+    }
+
+    .video-card:hover .play-btn {
+      border-color: var(--red);
+      background: rgba(196,32,32,0.15);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .video-label {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .video-title {
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .watch-cta { text-align: center; }
+
+
+    /* ==========================================================
+       LIVE EXPERIENCE TEASER
+       ========================================================== */
+
+    .experience {
+      padding: 100px 0;
+      background: var(--black);
+    }
+
+    .experience-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .experience-header .body-text {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .sets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
+
+    .set-card {
+      background: var(--dark2);
+      padding: 48px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--ease);
+    }
+
+    .set-card:hover { background: #181818; }
+
+    .set-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .set-card:hover::before { transform: scaleX(1); }
+
+    .set-number {
+      font-family: 'Georgia', serif;
+      font-size: 64px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      margin-bottom: -16px;
+      display: block;
+    }
+
+    .set-tag {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .set-name {
+      font-family: 'Georgia', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .set-desc {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--grey);
+    }
+
+    .experience-cta { text-align: center; }
+
+
+    /* ==========================================================
+       UPCOMING SHOWS
+       ========================================================== */
+
+    .shows {
+      padding: 100px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .shows-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .show-card {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      align-items: center;
+      gap: 32px;
+      padding: 28px 32px;
+      border: 1px solid var(--border);
+      background: var(--dark2);
+      margin-bottom: 1px;
+      transition: border-color var(--ease), background var(--ease);
+    }
+
+    .show-card:hover {
+      border-color: rgba(196,32,32,0.4);
+      background: #131313;
+    }
+
+    .show-date {
+      text-align: center;
+      border-right: 1px solid var(--border);
+      padding-right: 32px;
+    }
+
+    .show-date-day {
+      font-family: 'Georgia', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .show-date-month {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-top: 4px;
+    }
+
+    .show-venue {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .show-location {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+
+    /* ==========================================================
+       BOOKING CTA
+       ========================================================== */
+
+    .booking {
+      padding: 140px 0;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .booking::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(196,32,32,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .booking-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .booking-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--red);
+      margin: 0 auto 36px;
+    }
+
+    .booking-headline {
+      font-family: 'Georgia', serif;
+      font-size: clamp(32px, 5vw, 60px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .booking-body {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--grey);
+      margin-bottom: 44px;
+    }
+
+
+    /* ==========================================================
+       FOOTER
+       ========================================================== */
+
+    .site-footer {
+      background: #0f0f0f;
+      border-top: 1px solid var(--border);
+      padding: 72px 32px 36px;
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 52px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-brand-name {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .footer-brand-name span { color: var(--red); }
+
+    .footer-tagline {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 13px;
+      color: var(--grey);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+
+    .footer-credibility {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      color: rgba(160,160,160,0.6);
+      letter-spacing: 0.03em;
+      line-height: 1.8;
+      border-left: 2px solid var(--red);
+      padding-left: 14px;
+    }
+
+    .footer-col-heading {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+
+    .footer-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-nav li a {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-nav li a:hover { color: var(--white); }
+
+    .footer-cta-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--red);
+      margin-bottom: 28px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .footer-cta-btn:hover {
+      background: transparent;
+      color: var(--red);
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-link:hover { color: var(--white); }
+
+    .social-icon {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .copyright {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      color: rgba(160,160,160,0.4);
+      letter-spacing: 0.04em;
+    }
+
+
+    /* ==========================================================
+       RESPONSIVE
+       ========================================================== */
+
+    @media (max-width: 900px) {
+      .position-grid { grid-template-columns: 1fr; gap: 40px; }
+      .position-left::before { display: none; }
+      .position-left { padding-left: 0; }
+      .watch-cards { grid-template-columns: 1fr; }
+      .cred-stats { grid-template-columns: repeat(2, 1fr); }
+      .sets { grid-template-columns: 1fr; }
+      .watch-header { flex-direction: column; align-items: flex-start; }
+      .shows-header { flex-direction: column; align-items: flex-start; }
+      .show-card { grid-template-columns: 80px 1fr; gap: 20px; }
+      .show-card-action { grid-column: 1 / -1; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      .site-header { height: 56px; }
+      .site-nav { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .hero { padding-top: 56px; }
+    }
+
+    @media (max-width: 600px) {
+      .inner, .hero-content .inner { padding: 0 20px; }
+      .site-footer { padding: 48px 20px 28px; }
+      .hero { min-height: 85vh; padding-bottom: 60px; }
+      .hero-headline { font-size: 38px; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .position, .watch, .experience, .shows, .booking { padding: 72px 0; }
+      .show-card { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
+      .show-date { border-right: none; padding-right: 0; text-align: left; display: flex; align-items: center; gap: 12px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+
+      <a href="index.html" class="logo" aria-label="The S.O.D.S – Home">
+        <span class="logo-the">The</span>
+        <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul class="site-nav" id="desktop-nav">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="watch.html">Watch</a></li>
+          <li><a href="experience.html">Experience</a></li>
+          <li><a href="shows.html">Shows</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="watch.html">Watch</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="shows.html">Shows</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+
+  <!-- =====================================================
+       HERO
+       To add a real background image, add this style to .hero-bg:
+       background-image: url('images/hero.jpg');
+       ===================================================== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-line" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="inner">
+        <span class="hero-eyebrow reveal">The Songs of Dire Straits</span>
+        <h1 class="hero-headline reveal delay-1">
+          Dire Straits.<br><em>Reimagined</em><br>for the stage.
+        </h1>
+        <p class="hero-sub reveal delay-2">
+          The S.O.D.S deliver the songs you know with the live energy, groove, and edge you didn't expect.
+        </p>
+        <div class="hero-ctas reveal delay-3">
+          <a href="watch.html" class="btn">Watch Live</a>
+          <a href="contact.html" class="btn-ghost">Book The Band</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       CREDIBILITY STRIP
+       ===================================================== -->
+  <section class="cred">
+    <div class="inner">
+      <p class="cred-heading reveal">Trusted by venues and audiences across Sydney and beyond</p>
+      <div class="cred-stats reveal delay-1">
+        <div class="cred-stat">
+          <div class="cred-stat-value">2<span>+</span></div>
+          <div class="cred-stat-label">Sold-Out<br>Theatre Shows</div>
+        </div>
+        <div class="cred-stat">
+          <div class="cred-stat-value">4<span>+</span></div>
+          <div class="cred-stat-label">Festival Stage<br>Appearances</div>
+        </div>
+        <div class="cred-stat">
+          <div class="cred-stat-value">13<span>+</span></div>
+          <div class="cred-stat-label">Repeat<br>Bookings</div>
+        </div>
+        <div class="cred-stat">
+          <div class="cred-stat-value">20<span>+</span></div>
+          <div class="cred-stat-label">Live<br>Performances</div>
+        </div>
+      </div>
+      <p class="cred-venues reveal delay-2">
+        Pottery Lane Performance Space Theatre · Lane Cove The Canopy Main Stage · St Ives Food &amp; Wine Festival<br>
+        Turramurra Bowling Club · Asquith Golf Club · Bucketty's Brewing Co. · Diggers @ The Entrance · Club Berowra
+      </p>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       POSITIONING
+       ===================================================== -->
+  <section class="position">
+    <div class="position-bg-text" aria-hidden="true">LIVE</div>
+    <div class="inner">
+      <div class="position-grid">
+        <div class="position-left">
+          <span class="label reveal">The Experience</span>
+          <h2 class="h2 reveal delay-1">Not just a tribute.<br>A live experience.</h2>
+        </div>
+        <div class="position-right">
+          <p class="body-text reveal delay-2">
+            The S.O.D.S celebrate the music of Dire Straits with a show built for the stage. The band stays true to the spirit of the originals while bringing fresh dynamics, groove-driven arrangements, and a powerful live energy to every performance.
+          </p>
+          <div class="reveal delay-3">
+            <a href="experience.html" class="btn-text">Explore The Experience</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       WATCH PREVIEW
+       Replace href="#" with real YouTube links when ready
+       ===================================================== -->
+  <section class="watch">
+    <div class="inner">
+      <div class="watch-header">
+        <div>
+          <span class="label reveal">Watch</span>
+          <h2 class="h2 reveal delay-1">See the band live.</h2>
+          <p class="body-text reveal delay-2">From intimate theatre shows to festival stages, The S.O.D.S bring the Dire Straits catalogue to life with musicianship, atmosphere, and momentum.</p>
+        </div>
+      </div>
+      <div class="watch-cards">
+        <a href="#" class="video-card reveal">
+          <div class="video-card-overlay">
+            <span class="video-label">Full Show Reel</span>
+            <div><div class="play-btn"></div><p class="video-title">Live Performance Clip</p></div>
+          </div>
+        </a>
+        <a href="#" class="video-card reveal delay-1">
+          <div class="video-card-overlay">
+            <span class="video-label">Festival Stage</span>
+            <div><div class="play-btn"></div><p class="video-title">Festival Stage Clip</p></div>
+          </div>
+        </a>
+        <a href="#" class="video-card reveal delay-2">
+          <div class="video-card-overlay">
+            <span class="video-label">Acoustic Set</span>
+            <div><div class="play-btn"></div><p class="video-title">Acoustic / Stripped Back</p></div>
+          </div>
+        </a>
+      </div>
+      <div class="watch-cta reveal">
+        <a href="watch.html" class="btn-text">Watch More</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       LIVE EXPERIENCE TEASER
+       ===================================================== -->
+  <section class="experience">
+    <div class="inner">
+      <div class="experience-header">
+        <span class="label reveal">The Show</span>
+        <h2 class="h2 reveal delay-1">Three sets. One complete journey.</h2>
+        <p class="body-text reveal delay-2">The show builds from groove and atmosphere into iconic hits, deep cuts, long-form classics, and a finale designed to leave the room buzzing.</p>
+      </div>
+      <div class="sets reveal delay-1">
+        <div class="set-card">
+          <span class="set-number" aria-hidden="true">01</span>
+          <span class="set-tag">Set One</span>
+          <h3 class="set-name">The Build</h3>
+          <p class="set-desc">Establishes groove and tone. Draws the audience in and sets the atmosphere for what's ahead.</p>
+        </div>
+        <div class="set-card">
+          <span class="set-number" aria-hidden="true">02</span>
+          <span class="set-tag">Set Two</span>
+          <h3 class="set-name">The Payoff</h3>
+          <p class="set-desc">Recognisable songs at full energy. High audience engagement, including a dedicated storytelling moment.</p>
+        </div>
+        <div class="set-card">
+          <span class="set-number" aria-hidden="true">03</span>
+          <span class="set-tag">Set Three</span>
+          <h3 class="set-name">The Finale</h3>
+          <p class="set-desc">Long-form songs. The emotional and musical peak of the night, built to close strong.</p>
+        </div>
+      </div>
+      <div class="experience-cta reveal delay-2">
+        <a href="experience.html" class="btn">Discover The Live Experience</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       UPCOMING SHOWS
+       Replace TBC card with real show details when ready
+       ===================================================== -->
+  <section class="shows">
+    <div class="inner">
+      <div class="shows-header">
+        <div>
+          <span class="label reveal">Live Dates</span>
+          <h2 class="h2 reveal delay-1">Upcoming Shows</h2>
+          <p class="body-text reveal delay-2">Find out where The S.O.D.S are playing next and book your tickets.</p>
+        </div>
+        <div class="reveal delay-2">
+          <a href="shows.html" class="btn-text">View All Shows</a>
+        </div>
+      </div>
+      <div class="show-card reveal">
+        <div class="show-date">
+          <div class="show-date-day">TBC</div>
+          <div class="show-date-month">2025</div>
+        </div>
+        <div>
+          <p class="show-venue">Venue To Be Announced</p>
+          <p class="show-location">Sydney, NSW</p>
+        </div>
+        <div class="show-card-action">
+          <a href="shows.html" class="btn">View Shows</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       BOOKING CTA
+       ===================================================== -->
+  <section class="booking">
+    <div class="booking-inner">
+      <span class="label reveal">Book The Band</span>
+      <div class="booking-divider reveal delay-1"></div>
+      <h2 class="booking-headline reveal delay-1">Book The S.O.D.S</h2>
+      <p class="booking-body reveal delay-2">Looking for a proven live act with sold-out shows, repeat bookings, and a catalogue audiences already love? Let's talk.</p>
+      <div class="reveal delay-3">
+        <a href="contact.html" class="btn">Enquire Now</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <div>
+          <p class="footer-brand-name">The S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></p>
+          <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
+          <p class="footer-credibility">
+            Sold-out shows. Festival stages.<br>
+            Repeat bookings across Sydney and beyond.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer-col-heading">Navigate</p>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watch.html">Watch</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="shows.html">Shows</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-heading">Book The Band</p>
+          <a href="contact.html" class="footer-cta-btn">Book The S.O.D.S</a>
+          <div class="social-links">
+            <a href="https://www.facebook.com/TheSongsOfDireStraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/thesongsofdirestraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.youtube.com/@TheSongsofDireStraits" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube
+            </a>
+            <a href="mailto:songsofdirestraits@gmail.com" class="social-link">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© 2026 The S.O.D.S. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // ---- Scroll: darken header on scroll ----
+    var header = document.getElementById('site-header');
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ---- Hamburger menu ----
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var isOpen = false;
+
+    hamburger.addEventListener('click', function () {
+      isOpen = !isOpen;
+      hamburger.classList.toggle('open', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) hamburger.click();
+    });
+
+    // ---- Scroll reveal ----
+    var revealEls = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach(function (el) { observer.observe(el); });
+
+    // Trigger hero elements immediately
+    document.querySelectorAll('.hero .reveal').forEach(function (el) {
+      setTimeout(function () { el.classList.add('visible'); }, 80);
+    });
+  </script>
+
+</body>
+</html>
