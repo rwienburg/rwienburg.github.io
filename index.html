@@ -1258,24 +1258,27 @@
         </div>
       </div>
       <div class="watch-cards">
-        <a href="https://youtu.be/U3BAKj8uXUY" target="_blank" rel="noopener" class="video-card reveal">
-          <div class="video-card-overlay">
+        <div class="video-card reveal" onclick="playHomeCard(this, 'U3BAKj8uXUY', 0)" style="cursor:pointer;">
+          <div class="video-card-overlay" id="home-thumb-0">
             <span class="video-label">Full Show Reel</span>
             <div><div class="play-btn"></div><p class="video-title">4 Minutes. Taste the Classics.</p></div>
           </div>
-        </a>
-        <a href="https://youtu.be/rSxxZHjLblI?t=64" target="_blank" rel="noopener" class="video-card reveal delay-1">
-          <div class="video-card-overlay">
+          <div class="home-iframe-wrap" id="home-iframe-0" style="display:none;position:absolute;inset:0;"><iframe title="Show Reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;inset:0;"></iframe></div>
+        </div>
+        <div class="video-card reveal delay-1" onclick="playHomeCard(this, 'rSxxZHjLblI', 64)" style="cursor:pointer;">
+          <div class="video-card-overlay" id="home-thumb-1">
             <span class="video-label">Live Performance</span>
             <div><div class="play-btn"></div><p class="video-title">Sultans of Swing — Full Clip</p></div>
           </div>
-        </a>
-        <a href="https://youtu.be/bYvu9eNug2g" target="_blank" rel="noopener" class="video-card reveal delay-2">
-          <div class="video-card-overlay">
+          <div class="home-iframe-wrap" id="home-iframe-1" style="display:none;position:absolute;inset:0;"><iframe title="Sultans of Swing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;inset:0;"></iframe></div>
+        </div>
+        <div class="video-card reveal delay-2" onclick="playHomeCard(this, 'bYvu9eNug2g', 0)" style="cursor:pointer;">
+          <div class="video-card-overlay" id="home-thumb-2">
             <span class="video-label">60 Second Highlight</span>
             <div><div class="play-btn"></div><p class="video-title">See What We Do In 60 Seconds</p></div>
           </div>
-        </a>
+          <div class="home-iframe-wrap" id="home-iframe-2" style="display:none;position:absolute;inset:0;"><iframe title="60 Second Highlight" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;inset:0;"></iframe></div>
+        </div>
       </div>
       <div class="watch-cta reveal">
         <a href="watch.html" class="btn-text">Watch More</a>
@@ -1501,6 +1504,18 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && isOpen) hamburger.click();
     });
+
+    // Inline video play for home page cards
+    function playHomeCard(card, videoId, startTime) {
+      var overlay = card.querySelector('.video-card-overlay');
+      var iframeWrap = card.querySelector('.home-iframe-wrap');
+      var iframe = iframeWrap.querySelector('iframe');
+      var src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      if (startTime > 0) src += '&start=' + startTime;
+      iframe.src = src;
+      overlay.style.display = 'none';
+      iframeWrap.style.display = 'block';
+    }
 
     // ---- Scroll reveal ----
     var revealEls = document.querySelectorAll('.reveal');
