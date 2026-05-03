@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — The S.O.D.S</title>
+  <meta name="description" content="Book The S.O.D.S for your venue, festival, or event. Get in touch with Australia's premier Dire Straits live experience.">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --red:       #c42020;
+      --black:     #0a0a0a;
+      --dark:      #0f0f0f;
+      --dark2:     #141414;
+      --white:     #ffffff;
+      --grey:      #a0a0a0;
+      --border:    rgba(255,255,255,0.07);
+      --ease:      0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; }
+
+    .inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .label {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+
+    .label::before { content: '— '; }
+
+    /* ---- Buttons ---- */
+    .btn {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      border: 2px solid var(--red);
+      background: var(--red);
+      color: var(--white);
+      transition: background var(--ease), color var(--ease);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--red);
+    }
+
+    /* ---- Scroll reveal ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+
+    /* ==========================================================
+       HEADER
+       ========================================================== */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 64px;
+      background: rgba(0,0,0,0.93);
+      border-bottom: 1px solid var(--border);
+      z-index: 9999;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: background 0.3s ease;
+    }
+
+    .site-header.scrolled { background: rgba(0,0,0,0.98); }
+
+    .header-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .logo-the {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      color: var(--grey);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .logo-name {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-name span { color: var(--red); }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .site-nav li a {
+      display: block;
+      padding: 6px 12px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .site-nav li a::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 12px; right: 12px;
+      height: 1px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .site-nav li a:hover { color: var(--white); }
+    .site-nav li a:hover::after { transform: scaleX(1); }
+    .site-nav li a.active { color: var(--white); }
+    .site-nav li a.active::after { transform: scaleX(1); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px; height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 56px; left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.97);
+      border-bottom: 1px solid var(--border);
+      list-style: none;
+      padding: 12px 0 20px;
+      z-index: 9998;
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .mobile-menu li a {
+      display: block;
+      padding: 14px 28px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mobile-menu li a:hover,
+    .mobile-menu li a.active {
+      color: var(--white);
+      border-left-color: var(--red);
+    }
+
+
+    /* ==========================================================
+       PAGE HERO
+       ========================================================== */
+    .page-hero {
+      padding: 160px 0 80px;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(196,32,32,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-bg-text {
+      position: absolute;
+      right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Georgia', serif;
+      font-size: clamp(80px, 16vw, 220px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.02);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .page-hero h1 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+
+    .page-hero p {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--grey);
+      max-width: 520px;
+    }
+
+
+    /* ==========================================================
+       CONTACT LAYOUT
+       ========================================================== */
+    .contact-section {
+      padding: 100px 0;
+      background: var(--black);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* ---- Left column: info ---- */
+    .contact-info h2 {
+      font-family: 'Georgia', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .contact-info p {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--grey);
+      margin-bottom: 36px;
+    }
+
+    /* Contact detail blocks */
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-detail:last-of-type {
+      border-bottom: none;
+    }
+
+    .contact-detail-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-detail-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--red);
+    }
+
+    .contact-detail-label {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+
+    .contact-detail-value {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .contact-detail-value a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-detail-value a:hover { color: var(--red); }
+
+    /* Social links */
+    .contact-socials {
+      margin-top: 36px;
+    }
+
+    .contact-socials-heading {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .contact-social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .contact-social-link {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--grey);
+      text-decoration: none;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .contact-social-link:hover {
+      border-color: var(--red);
+      color: var(--white);
+    }
+
+    .contact-social-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* ---- Right column: form ---- */
+    .contact-form-wrap {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      padding: 48px;
+    }
+
+    .form-heading {
+      font-family: 'Georgia', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .form-subheading {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 13px;
+      color: var(--grey);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      display: block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--red);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(160,160,160,0.4);
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a0a0a0' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-select option {
+      background: var(--dark2);
+      color: var(--white);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .form-note {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      color: rgba(160,160,160,0.5);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .form-submit {
+      width: 100%;
+      margin-top: 8px;
+      font-size: 12px;
+      padding: 16px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      background: var(--red);
+      color: var(--white);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .form-submit:hover {
+      background: transparent;
+      color: var(--red);
+      border: 2px solid var(--red);
+    }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .form-success-icon {
+      width: 56px;
+      height: 56px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .form-success-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--red);
+    }
+
+    .form-success h3 {
+      font-family: 'Georgia', serif;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .form-success p {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      color: var(--grey);
+      line-height: 1.7;
+    }
+
+
+    /* ==========================================================
+       FOOTER
+       ========================================================== */
+    .site-footer {
+      background: #0f0f0f;
+      border-top: 1px solid var(--border);
+      padding: 72px 32px 36px;
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 52px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-tagline {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 13px;
+      color: var(--grey);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+
+    .footer-credibility {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      color: rgba(160,160,160,0.6);
+      letter-spacing: 0.03em;
+      line-height: 1.8;
+      border-left: 2px solid var(--red);
+      padding-left: 14px;
+    }
+
+    .footer-col-heading {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+
+    .footer-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-nav li a {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-nav li a:hover { color: var(--white); }
+
+    .footer-cta-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--red);
+      margin-bottom: 28px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .footer-cta-btn:hover {
+      background: transparent;
+      color: var(--red);
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-link:hover { color: var(--white); }
+
+    .social-icon {
+      width: 16px; height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .copyright {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      color: rgba(160,160,160,0.4);
+      letter-spacing: 0.04em;
+    }
+
+
+    /* ==========================================================
+       RESPONSIVE
+       ========================================================== */
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      .site-header { height: 56px; }
+      .site-nav { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+    }
+
+    @media (max-width: 600px) {
+      .inner { padding: 0 20px; }
+      .site-footer { padding: 48px 20px 28px; }
+      .contact-form-wrap { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-section { padding: 64px 0; }
+      .page-hero { padding: 120px 0 56px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-the">The</span>
+        <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="site-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="watch.html">Watch</a></li>
+          <li><a href="experience.html">Experience</a></li>
+          <li><a href="shows.html">Shows</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="watch.html">Watch</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="shows.html">Shows</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg-text" aria-hidden="true">BOOK</div>
+    <div class="page-hero-inner">
+      <span class="label reveal">Get In Touch</span>
+      <h1 class="reveal delay-1">Book The S.O.D.S.</h1>
+      <p class="reveal delay-2">Sold-out shows. Repeat bookings. A catalogue audiences already love. If you're looking for a proven live act that delivers every time, let's talk.</p>
+    </div>
+  </section>
+
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="inner">
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="contact-info reveal">
+          <span class="label">Direct Contact</span>
+          <h2>Let's make something happen.</h2>
+          <p>Whether you're booking a venue, organising a festival, or planning a private event — The S.O.D.S are ready to deliver. Fill in the form and we'll be in touch within 48 hours.</p>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Email</p>
+              <p class="contact-detail-value"><a href="mailto:songsofdirestraits@gmail.com">songsofdirestraits@gmail.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Based In</p>
+              <p class="contact-detail-value">Sydney, NSW, Australia</p>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 17.93V18a1 1 0 00-2 0v1.93A8.001 8.001 0 014.07 13H6a1 1 0 000-2H4.07A8.001 8.001 0 0111 4.07V6a1 1 0 002 0V4.07A8.001 8.001 0 0119.93 11H18a1 1 0 000 2h1.93A8.001 8.001 0 0113 19.93z"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Availability</p>
+              <p class="contact-detail-value">Sydney metro and regional NSW.<br>Interstate on request.</p>
+            </div>
+          </div>
+
+          <div class="contact-socials">
+            <p class="contact-socials-heading">Follow The Band</p>
+            <div class="contact-social-links">
+              <a href="https://www.facebook.com/TheSongsOfDireStraits/" class="contact-social-link" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/thesongsofdirestraits/" class="contact-social-link" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.youtube.com/@TheSongsofDireStraits" class="contact-social-link" target="_blank" rel="noopener" aria-label="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="contact-form-wrap reveal delay-1">
+          <h3 class="form-heading">Enquiry Form</h3>
+          <p class="form-subheading">Tell us about your event and we'll get back to you within 48 hours.</p>
+
+          <div id="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="name">Your Name *</label>
+                <input class="form-input" type="text" id="name" placeholder="First and last name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email Address *</label>
+                <input class="form-input" type="email" id="email" placeholder="your@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input class="form-input" type="tel" id="phone" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="event-date">Event Date</label>
+                <input class="form-input" type="date" id="event-date">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="event-type">Event Type *</label>
+              <select class="form-select" id="event-type" required>
+                <option value="" disabled selected>Select event type</option>
+                <option value="venue">Venue / Club</option>
+                <option value="festival">Festival</option>
+                <option value="theatre">Theatre</option>
+                <option value="private">Private Event</option>
+                <option value="corporate">Corporate Event</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="venue-name">Venue / Location</label>
+              <input class="form-input" type="text" id="venue-name" placeholder="Venue name and suburb">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="message">Message *</label>
+              <textarea class="form-textarea" id="message" placeholder="Tell us about your event, expected audience size, and anything else we should know..." required></textarea>
+            </div>
+
+            <button class="btn form-submit" onclick="submitForm()">Send Enquiry</button>
+            <p class="form-note">* Required fields. We respond to all enquiries within 48 hours.</p>
+          </div>
+
+          <!-- Success message shown after submit -->
+          <div class="form-success" id="form-success">
+            <div class="form-success-icon">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+            <h3>Enquiry Sent</h3>
+            <p>Thanks for getting in touch. We'll get back to you within 48 hours.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The S.O.D.S" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
+          <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
+          <p class="footer-credibility">Sold-out shows. Festival stages.<br>Repeat bookings across Sydney and beyond.</p>
+        </div>
+        <div>
+          <p class="footer-col-heading">Navigate</p>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watch.html">Watch</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="shows.html">Shows</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-heading">Book The Band</p>
+          <a href="contact.html" class="footer-cta-btn">Book The S.O.D.S</a>
+          <div class="social-links">
+            <a href="https://www.facebook.com/TheSongsOfDireStraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/thesongsofdirestraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.youtube.com/@TheSongsofDireStraits" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube
+            </a>
+            <a href="mailto:songsofdirestraits@gmail.com" class="social-link">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© 2026 The S.O.D.S. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // Header scroll
+    var header = document.getElementById('site-header');
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Hamburger
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var isOpen = false;
+
+    hamburger.addEventListener('click', function () {
+      isOpen = !isOpen;
+      hamburger.classList.toggle('open', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) hamburger.click();
+    });
+
+    // Scroll reveal
+    var revealEls = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el) { observer.observe(el); });
+
+    // Trigger hero immediately
+    document.querySelectorAll('.page-hero .reveal').forEach(function (el) {
+      setTimeout(function () { el.classList.add('visible'); }, 80);
+    });
+
+    // Form submit — builds mailto link from form fields
+    function submitForm() {
+      var name      = document.getElementById('name').value.trim();
+      var email     = document.getElementById('email').value.trim();
+      var phone     = document.getElementById('phone').value.trim();
+      var date      = document.getElementById('event-date').value;
+      var type      = document.getElementById('event-type').value;
+      var venue     = document.getElementById('venue-name').value.trim();
+      var message   = document.getElementById('message').value.trim();
+
+      if (!name || !email || !type || !message) {
+        alert('Please fill in all required fields before sending.');
+        return;
+      }
+
+      var subject = 'Booking Enquiry — ' + (type ? type.charAt(0).toUpperCase() + type.slice(1) : 'Event');
+
+      var body = [
+        'Name: ' + name,
+        'Email: ' + email,
+        phone  ? 'Phone: ' + phone : '',
+        date   ? 'Event Date: ' + date : '',
+        type   ? 'Event Type: ' + type : '',
+        venue  ? 'Venue / Location: ' + venue : '',
+        '',
+        'Message:',
+        message
+      ].filter(Boolean).join('\n');
+
+      var mailto = 'mailto:songsofdirestraits@gmail.com'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+
+      window.location.href = mailto;
+
+      // Show success message
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
