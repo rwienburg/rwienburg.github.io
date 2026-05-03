@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shows — The S.O.D.S</title>
+  <meta name="description" content="Upcoming live shows from The S.O.D.S — The Songs of Dire Straits. See them live across Sydney and beyond.">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #c42020;
+      --black:  #0a0a0a;
+      --dark:   #0f0f0f;
+      --dark2:  #141414;
+      --white:  #ffffff;
+      --grey:   #a0a0a0;
+      --border: rgba(255,255,255,0.07);
+      --ease:   0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Georgia', serif; overflow-x: hidden; }
+    a { text-decoration: none; }
+
+    .inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+    .label {
+      display: inline-block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 18px;
+    }
+    .label::before { content: '— '; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      padding: 13px 28px;
+      border: 2px solid var(--red); background: var(--red); color: var(--white);
+      transition: background var(--ease), color var(--ease);
+      white-space: nowrap;
+    }
+    .btn:hover { background: transparent; color: var(--red); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      padding: 13px 28px;
+      border: 2px solid rgba(255,255,255,0.2); background: transparent; color: var(--grey);
+      transition: border-color var(--ease), color var(--ease);
+    }
+    .btn-ghost:hover { border-color: var(--white); color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* HEADER */
+    .site-header {
+      position: fixed; top: 0; left: 0; width: 100%; height: 64px;
+      background: rgba(0,0,0,0.93); border-bottom: 1px solid var(--border);
+      z-index: 9999; backdrop-filter: blur(6px); transition: background 0.3s ease;
+    }
+    .site-header.scrolled { background: rgba(0,0,0,0.98); }
+    .header-inner {
+      max-width: 1160px; margin: 0 auto; height: 100%; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; flex-shrink: 0; }
+    .logo-the { font-family: 'Helvetica Neue', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.32em; color: var(--grey); text-transform: uppercase; margin-bottom: 2px; }
+    .logo-name { font-family: 'Helvetica Neue', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 0.18em; color: var(--white); text-transform: uppercase; }
+    .logo-name span { color: var(--red); }
+    .site-nav { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .site-nav li a {
+      display: block; padding: 6px 12px;
+      font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey);
+      text-decoration: none; position: relative; transition: color 0.2s ease;
+    }
+    .site-nav li a::after {
+      content: ''; position: absolute; bottom: 2px; left: 12px; right: 12px;
+      height: 1px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.2s ease;
+    }
+    .site-nav li a:hover { color: var(--white); }
+    .site-nav li a:hover::after { transform: scaleX(1); }
+    .site-nav li a.active { color: var(--white); }
+    .site-nav li a.active::after { transform: scaleX(1); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 56px; left: 0; width: 100%;
+      background: rgba(0,0,0,0.97); border-bottom: 1px solid var(--border);
+      list-style: none; padding: 12px 0 20px; z-index: 9998;
+      opacity: 0; transform: translateY(-8px); pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .mobile-menu li a {
+      display: block; padding: 14px 28px;
+      font-family: 'Helvetica Neue', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey);
+      text-decoration: none; border-left: 2px solid transparent; transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .mobile-menu li a:hover, .mobile-menu li a.active { color: var(--white); border-left-color: var(--red); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 160px 0 80px; background: var(--black);
+      position: relative; overflow: hidden; border-bottom: 1px solid var(--border);
+    }
+    .page-hero-bg-text {
+      position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+      font-family: 'Georgia', serif; font-size: clamp(80px, 16vw, 220px); font-weight: 700;
+      color: rgba(255,255,255,0.02); pointer-events: none; user-select: none; white-space: nowrap;
+    }
+    .page-hero-inner { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .page-hero h1 { font-family: 'Georgia', serif; font-size: clamp(40px, 6vw, 80px); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: var(--white); margin-bottom: 20px; max-width: 700px; }
+    .page-hero p { font-family: 'Helvetica Neue', sans-serif; font-size: 17px; line-height: 1.75; color: var(--grey); max-width: 520px; }
+
+    /* UPCOMING SHOWS */
+    .shows-section { padding: 100px 0; background: var(--black); }
+    .shows-section-header { margin-bottom: 52px; }
+    .shows-section-header h2 { font-family: 'Georgia', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; color: var(--white); margin-bottom: 12px; }
+
+    .show-card {
+      border: 1px solid var(--border); background: var(--dark);
+      margin-bottom: 1px; transition: border-color var(--ease), background var(--ease);
+    }
+    .show-card:hover { border-color: rgba(196,32,32,0.35); background: #111; }
+    .show-card-inner { display: grid; grid-template-columns: 140px 1fr auto; align-items: center; }
+
+    .show-date { padding: 36px 32px; border-right: 1px solid var(--border); text-align: center; }
+    .show-date-day { font-family: 'Georgia', serif; font-size: 48px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .show-date-month { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 2px; }
+    .show-date-year { font-family: 'Helvetica Neue', sans-serif; font-size: 10px; letter-spacing: 0.1em; color: var(--grey); }
+
+    .show-info { padding: 36px 40px; }
+    .show-tag { font-family: 'Helvetica Neue', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; display: block; }
+    .show-venue { font-family: 'Georgia', serif; font-size: 24px; font-weight: 700; color: var(--white); margin-bottom: 10px; line-height: 1.2; }
+    .show-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .show-meta-item { display: flex; align-items: center; gap: 7px; font-family: 'Helvetica Neue', sans-serif; font-size: 12px; color: var(--grey); letter-spacing: 0.05em; }
+    .show-meta-item svg { width: 13px; height: 13px; fill: var(--red); flex-shrink: 0; }
+
+    .show-action { padding: 36px 36px 36px 0; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    .show-tickets-note { font-family: 'Helvetica Neue', sans-serif; font-size: 10px; letter-spacing: 0.1em; color: var(--grey); text-align: right; }
+
+    /* PAST SHOWS */
+    .past-section { padding: 100px 0; background: var(--dark); border-top: 1px solid var(--border); }
+    .past-header { text-align: center; margin-bottom: 64px; }
+    .past-header h2 { font-family: 'Georgia', serif; font-size: clamp(26px, 3.5vw, 44px); font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .past-header p { font-family: 'Helvetica Neue', sans-serif; font-size: 15px; color: var(--grey); line-height: 1.7; max-width: 500px; margin: 0 auto; }
+
+    .past-venues { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .past-venue-card { background: var(--dark2); padding: 32px 28px; transition: background var(--ease); }
+    .past-venue-card:hover { background: #181818; }
+    .past-venue-name { font-family: 'Georgia', serif; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; line-height: 1.3; }
+    .past-venue-detail { font-family: 'Helvetica Neue', sans-serif; font-size: 12px; color: var(--grey); letter-spacing: 0.05em; line-height: 1.6; }
+    .past-venue-count { display: inline-block; margin-top: 10px; font-family: 'Helvetica Neue', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(196,32,32,0.3); padding: 3px 8px; }
+
+    /* FOLLOW SECTION */
+    .follow-section { padding: 100px 0; background: var(--black); text-align: center; position: relative; overflow: hidden; }
+    .follow-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(196,32,32,0.06) 0%, transparent 70%); pointer-events: none; }
+    .follow-inner { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; padding: 0 32px; }
+    .follow-divider { width: 48px; height: 2px; background: var(--red); margin: 0 auto 32px; }
+    .follow-inner h2 { font-family: 'Georgia', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; color: var(--white); margin-bottom: 16px; line-height: 1.1; }
+    .follow-inner p { font-family: 'Helvetica Neue', sans-serif; font-size: 16px; color: var(--grey); line-height: 1.7; margin-bottom: 36px; }
+    .follow-buttons { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    /* FOOTER */
+    .site-footer { background: #0f0f0f; border-top: 1px solid var(--border); padding: 72px 32px 36px; }
+    .footer-inner { max-width: 1160px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px; padding-bottom: 52px; border-bottom: 1px solid var(--border); }
+    .footer-tagline { font-family: 'Helvetica Neue', sans-serif; font-size: 13px; color: var(--grey); letter-spacing: 0.04em; line-height: 1.6; margin-bottom: 22px; font-style: italic; }
+    .footer-credibility { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; color: rgba(160,160,160,0.6); letter-spacing: 0.03em; line-height: 1.8; border-left: 2px solid var(--red); padding-left: 14px; }
+    .footer-col-heading { font-family: 'Helvetica Neue', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+    .footer-nav { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-nav li a { font-family: 'Helvetica Neue', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); text-decoration: none; transition: color 0.2s ease; }
+    .footer-nav li a:hover { color: var(--white); }
+    .footer-cta-btn { display: inline-block; padding: 12px 24px; background: var(--red); color: var(--white); font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--red); margin-bottom: 28px; transition: background 0.2s ease, color 0.2s ease; }
+    .footer-cta-btn:hover { background: transparent; color: var(--red); }
+    .social-links { display: flex; flex-direction: column; gap: 10px; }
+    .social-link { display: flex; align-items: center; gap: 10px; font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey); text-decoration: none; transition: color 0.2s ease; }
+    .social-link:hover { color: var(--white); }
+    .social-icon { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; flex-wrap: wrap; gap: 12px; }
+    .copyright { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; color: rgba(160,160,160,0.4); letter-spacing: 0.04em; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .show-card-inner { grid-template-columns: 110px 1fr; }
+      .show-action { grid-column: 1 / -1; padding: 0 28px 28px; flex-direction: row; align-items: center; justify-content: flex-start; }
+      .past-venues { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 768px) {
+      .site-header { height: 56px; }
+      .site-nav { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+    }
+    @media (max-width: 600px) {
+      .inner { padding: 0 20px; }
+      .site-footer { padding: 48px 20px 28px; }
+      .shows-section, .past-section, .follow-section { padding: 72px 0; }
+      .page-hero { padding: 120px 0 56px; }
+      .show-card-inner { grid-template-columns: 1fr; }
+      .show-date { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; text-align: left; display: flex; align-items: center; gap: 16px; }
+      .show-date-day { font-size: 36px; }
+      .show-info { padding: 20px 24px; }
+      .show-action { padding: 0 24px 24px; flex-direction: column; align-items: flex-start; }
+      .show-tickets-note { text-align: left; }
+      .past-venues { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-the">The</span>
+        <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="site-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="watch.html">Watch</a></li>
+          <li><a href="experience.html">Experience</a></li>
+          <li><a href="shows.html" class="active">Shows</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="watch.html">Watch</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="shows.html" class="active">Shows</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+
+  <section class="page-hero">
+    <div class="page-hero-bg-text" aria-hidden="true">SHOWS</div>
+    <div class="page-hero-inner">
+      <span class="label reveal">Live Dates</span>
+      <h1 class="reveal delay-1">Upcoming Shows</h1>
+      <p class="reveal delay-2">The S.O.D.S perform across Sydney and beyond. Find your nearest show, grab your tickets, and hear the music live.</p>
+    </div>
+  </section>
+
+
+  <section class="shows-section">
+    <div class="inner">
+      <div class="shows-section-header">
+        <span class="label reveal">On Sale Now</span>
+        <h2 class="reveal delay-1">What's Coming Up</h2>
+      </div>
+
+      <!-- SHOW 1: Galston Club -->
+      <div class="show-card reveal">
+        <div class="show-card-inner">
+          <div class="show-date">
+            <div class="show-date-day">20</div>
+            <div class="show-date-month">Jun</div>
+            <div class="show-date-year">2025</div>
+          </div>
+          <div class="show-info">
+            <span class="show-tag">Live Show</span>
+            <p class="show-venue">The Galston Club</p>
+            <div class="show-meta">
+              <span class="show-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                21-25 Arcadia Rd, Galston NSW
+              </span>
+              <span class="show-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                Saturday · 7:00pm
+              </span>
+            </div>
+          </div>
+          <div class="show-action">
+            <a href="https://www.galstonclub.com.au/copy-of-eat-drink" class="btn" target="_blank" rel="noopener">Reserve Table</a>
+            <p class="show-tickets-note">No tickets required</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOW 2: Collaroy Cinema -->
+      <div class="show-card reveal delay-1">
+        <div class="show-card-inner">
+          <div class="show-date">
+            <div class="show-date-day">9</div>
+            <div class="show-date-month">Aug</div>
+            <div class="show-date-year">2025</div>
+          </div>
+          <div class="show-info">
+            <span class="show-tag">Live Show</span>
+            <p class="show-venue">United Cinemas Collaroy</p>
+            <div class="show-meta">
+              <span class="show-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                1097 Pittwater Rd, Collaroy NSW
+              </span>
+              <span class="show-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                Sunday · 7:00pm
+              </span>
+            </div>
+          </div>
+          <div class="show-action">
+            <a href="https://www.unitedcinemas.com.au/order/showtimes/1003-13887/tickets" class="btn" target="_blank" rel="noopener">Get Tickets</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="past-section">
+    <div class="inner">
+      <div class="past-header">
+        <span class="label reveal">Track Record</span>
+        <h2 class="reveal delay-1">Where We've Played</h2>
+        <p class="reveal delay-2">Trusted and rebooked by venues across Sydney.</p>
+      </div>
+
+      <div class="past-venues">
+        <div class="past-venue-card reveal">
+          <p class="past-venue-name">Pottery Lane Performance Space Theatre</p>
+          <p class="past-venue-detail">Lane Cove, NSW</p>
+          <span class="past-venue-count">Sold Out</span>
+        </div>
+        <div class="past-venue-card reveal delay-1">
+          <p class="past-venue-name">Carisbrook House Museum</p>
+          <p class="past-venue-detail">Theatre Show</p>
+          <span class="past-venue-count">Sold Out</span>
+        </div>
+        <div class="past-venue-card reveal delay-2">
+          <p class="past-venue-name">Lane Cove The Canopy</p>
+          <p class="past-venue-detail">Main Stage · Festival</p>
+          <span class="past-venue-count">Festival Stage</span>
+        </div>
+        <div class="past-venue-card reveal">
+          <p class="past-venue-name">St Ives Food &amp; Wine Festival</p>
+          <p class="past-venue-detail">St Ives, NSW</p>
+          <span class="past-venue-count">2 Appearances</span>
+        </div>
+        <div class="past-venue-card reveal delay-1">
+          <p class="past-venue-name">Turramurra Bowling Club</p>
+          <p class="past-venue-detail">Turramurra, NSW</p>
+          <span class="past-venue-count">8 Shows</span>
+        </div>
+        <div class="past-venue-card reveal delay-2">
+          <p class="past-venue-name">Asquith Golf Club</p>
+          <p class="past-venue-detail">Asquith, NSW</p>
+          <span class="past-venue-count">3 Shows</span>
+        </div>
+        <div class="past-venue-card reveal">
+          <p class="past-venue-name">Bucketty's Brewing Co.</p>
+          <p class="past-venue-detail">Brookvale, NSW</p>
+          <span class="past-venue-count">2 Shows</span>
+        </div>
+        <div class="past-venue-card reveal delay-1">
+          <p class="past-venue-name">Diggers @ The Entrance</p>
+          <p class="past-venue-detail">The Entrance, NSW</p>
+        </div>
+        <div class="past-venue-card reveal delay-2">
+          <p class="past-venue-name">Club Berowra</p>
+          <p class="past-venue-detail">Berowra, NSW</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="follow-section">
+    <div class="follow-inner">
+      <span class="label reveal">Stay Updated</span>
+      <div class="follow-divider reveal delay-1"></div>
+      <h2 class="reveal delay-1">Never miss a show.</h2>
+      <p class="reveal delay-2">Follow The S.O.D.S on Facebook for show announcements, ticket releases, and updates direct from the band.</p>
+      <div class="follow-buttons reveal delay-3">
+        <a href="https://www.facebook.com/TheSongsOfDireStraits/" class="btn" target="_blank" rel="noopener">Follow on Facebook</a>
+        <a href="contact.html" class="btn-ghost">Book The Band</a>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The S.O.D.S" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
+          <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
+          <p class="footer-credibility">Sold-out shows. Festival stages.<br>Repeat bookings across Sydney and beyond.</p>
+        </div>
+        <div>
+          <p class="footer-col-heading">Navigate</p>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watch.html">Watch</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="shows.html">Shows</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-heading">Book The Band</p>
+          <a href="contact.html" class="footer-cta-btn">Book The S.O.D.S</a>
+          <div class="social-links">
+            <a href="https://www.facebook.com/TheSongsOfDireStraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/thesongsofdirestraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.youtube.com/@TheSongsofDireStraits" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube
+            </a>
+            <a href="mailto:songsofdirestraits@gmail.com" class="social-link">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© 2026 The S.O.D.S. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    var header = document.getElementById('site-header');
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var isOpen = false;
+
+    hamburger.addEventListener('click', function () {
+      isOpen = !isOpen;
+      hamburger.classList.toggle('open', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) hamburger.click();
+    });
+
+    var revealEls = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el) { observer.observe(el); });
+
+    document.querySelectorAll('.page-hero .reveal').forEach(function (el) {
+      setTimeout(function () { el.classList.add('visible'); }, 80);
+    });
+  </script>
+
+</body>
+</html>
