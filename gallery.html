@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — The S.O.D.S</title>
+  <meta name="description" content="Photos from The S.O.D.S live shows — theatre nights, festival stages, and club performances across Sydney.">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #c42020;
+      --black:  #0a0a0a;
+      --dark:   #0f0f0f;
+      --dark2:  #141414;
+      --white:  #ffffff;
+      --grey:   #a0a0a0;
+      --border: rgba(255,255,255,0.07);
+      --ease:   0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Georgia', serif; overflow-x: hidden; }
+    a { text-decoration: none; }
+
+    .inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+    .label {
+      display: inline-block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 18px;
+    }
+    .label::before { content: '— '; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      padding: 15px 32px;
+      border: 2px solid var(--red); background: var(--red); color: var(--white);
+      transition: background var(--ease), color var(--ease);
+    }
+    .btn:hover { background: transparent; color: var(--red); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+
+    /* ==========================================================
+       HEADER
+       ========================================================== */
+    .site-header {
+      position: fixed; top: 0; left: 0; width: 100%; height: 64px;
+      background: rgba(0,0,0,0.93); border-bottom: 1px solid var(--border);
+      z-index: 9999; backdrop-filter: blur(6px); transition: background 0.3s ease;
+    }
+    .site-header.scrolled { background: rgba(0,0,0,0.98); }
+    .header-inner {
+      max-width: 1160px; margin: 0 auto; height: 100%; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; flex-shrink: 0; }
+    .logo-the { font-family: 'Helvetica Neue', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.32em; color: var(--grey); text-transform: uppercase; margin-bottom: 2px; }
+    .logo-name { font-family: 'Helvetica Neue', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 0.18em; color: var(--white); text-transform: uppercase; }
+    .logo-name span { color: var(--red); }
+    .site-nav { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .site-nav li a {
+      display: block; padding: 6px 12px;
+      font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey);
+      text-decoration: none; position: relative; transition: color 0.2s ease;
+    }
+    .site-nav li a::after { content: ''; position: absolute; bottom: 2px; left: 12px; right: 12px; height: 1px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.2s ease; }
+    .site-nav li a:hover { color: var(--white); }
+    .site-nav li a:hover::after { transform: scaleX(1); }
+    .site-nav li a.active { color: var(--white); }
+    .site-nav li a.active::after { transform: scaleX(1); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 56px; left: 0; width: 100%; background: rgba(0,0,0,0.97); border-bottom: 1px solid var(--border); list-style: none; padding: 12px 0 20px; z-index: 9998; opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease; }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .mobile-menu li a { display: block; padding: 14px 28px; font-family: 'Helvetica Neue', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); text-decoration: none; border-left: 2px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; }
+    .mobile-menu li a:hover, .mobile-menu li a.active { color: var(--white); border-left-color: var(--red); }
+
+
+    /* ==========================================================
+       PAGE HERO
+       ========================================================== */
+    .page-hero {
+      padding: 160px 0 80px;
+      background: var(--black);
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.94) 45%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.15) 50%),
+        url('SODS-PotteryStage_02.jpg');
+      background-size: cover;
+      background-position: center 35%;
+    }
+
+    .page-hero-bg-text {
+      position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+      font-family: 'Georgia', serif; font-size: clamp(80px, 16vw, 220px); font-weight: 700;
+      color: rgba(255,255,255,0.02); pointer-events: none; user-select: none; white-space: nowrap;
+    }
+
+    .page-hero-inner { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .page-hero h1 { font-family: 'Georgia', serif; font-size: clamp(40px, 6vw, 80px); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: var(--white); margin-bottom: 20px; max-width: 700px; }
+    .page-hero p { font-family: 'Helvetica Neue', sans-serif; font-size: 17px; line-height: 1.75; color: var(--grey); max-width: 520px; }
+
+
+    /* ==========================================================
+       EDITORIAL GALLERY
+       ========================================================== */
+    .gallery-section {
+      padding: 80px 0 100px;
+      background: var(--black);
+    }
+
+    /* Editorial masonry-style grid using CSS columns */
+    .gallery-grid {
+      column-count: 3;
+      column-gap: 12px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      filter: none;
+      transition: filter 0.4s ease, transform 0.5s ease;
+    }
+
+    /* Greyscale on hover */
+    .gallery-item:hover img {
+      filter: grayscale(100%) brightness(0.75);
+      transform: scale(1.02);
+    }
+
+    /* Subtle overlay on hover */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.4s ease;
+      pointer-events: none;
+    }
+
+    .gallery-item:hover::after {
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* View icon on hover */
+    .gallery-item-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      width: 48px; height: 48px;
+      border: 2px solid rgba(255,255,255,0.7);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .gallery-item-icon svg {
+      width: 18px; height: 18px;
+      fill: rgba(255,255,255,0.9);
+    }
+
+    .gallery-item:hover .gallery-item-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+
+    /* ==========================================================
+       LIGHTBOX
+       ========================================================== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Close button */
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      width: 44px; height: 44px;
+      background: none; border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color var(--ease), background var(--ease);
+      z-index: 2;
+    }
+
+    .lightbox-close:hover { border-color: var(--red); background: rgba(196,32,32,0.1); }
+
+    .lightbox-close svg {
+      width: 16px; height: 16px;
+      fill: var(--white);
+    }
+
+    /* Counter */
+    .lightbox-counter {
+      position: absolute;
+      top: 24px; left: 50%; transform: translateX(-50%);
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* Image container */
+    .lightbox-img-wrap {
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .lightbox-img.fading { opacity: 0; }
+
+    /* Prev / Next arrows */
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color var(--ease), background var(--ease);
+      z-index: 2;
+    }
+
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+
+    .lightbox-prev:hover,
+    .lightbox-next:hover {
+      border-color: var(--red);
+      background: rgba(196,32,32,0.15);
+    }
+
+    .lightbox-prev svg,
+    .lightbox-next svg {
+      width: 18px; height: 18px;
+      fill: var(--white);
+    }
+
+    /* Click outside area */
+    .lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .lightbox-img-wrap { z-index: 1; }
+
+
+    /* ==========================================================
+       FOOTER
+       ========================================================== */
+    .site-footer { background: #0f0f0f; border-top: 1px solid var(--border); padding: 72px 32px 36px; }
+    .footer-inner { max-width: 1160px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px; padding-bottom: 52px; border-bottom: 1px solid var(--border); }
+    .footer-tagline { font-family: 'Helvetica Neue', sans-serif; font-size: 13px; color: var(--grey); letter-spacing: 0.04em; line-height: 1.6; margin-bottom: 22px; font-style: italic; }
+    .footer-credibility { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; color: rgba(160,160,160,0.6); letter-spacing: 0.03em; line-height: 1.8; border-left: 2px solid var(--red); padding-left: 14px; }
+    .footer-col-heading { font-family: 'Helvetica Neue', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+    .footer-nav { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-nav li a { font-family: 'Helvetica Neue', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); text-decoration: none; transition: color 0.2s ease; }
+    .footer-nav li a:hover { color: var(--white); }
+    .footer-cta-btn { display: inline-block; padding: 12px 24px; background: var(--red); color: var(--white); font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--red); margin-bottom: 28px; transition: background 0.2s ease, color 0.2s ease; }
+    .footer-cta-btn:hover { background: transparent; color: var(--red); }
+    .social-links { display: flex; flex-direction: column; gap: 10px; }
+    .social-link { display: flex; align-items: center; gap: 10px; font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey); text-decoration: none; transition: color 0.2s ease; }
+    .social-link:hover { color: var(--white); }
+    .social-icon { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; flex-wrap: wrap; gap: 12px; }
+    .copyright { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; color: rgba(160,160,160,0.4); letter-spacing: 0.04em; }
+
+
+    /* ==========================================================
+       RESPONSIVE
+       ========================================================== */
+    @media (max-width: 900px) {
+      .gallery-grid { column-count: 2; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+    }
+
+    @media (max-width: 768px) {
+      .site-header { height: 56px; }
+      .site-nav { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+    }
+
+    @media (max-width: 500px) {
+      .inner { padding: 0 20px; }
+      .site-footer { padding: 48px 20px 28px; }
+      .gallery-section { padding: 56px 0 72px; }
+      .gallery-grid { column-count: 1; column-gap: 0; }
+      .gallery-item { margin-bottom: 8px; }
+      .page-hero { padding: 120px 0 56px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-the">The</span>
+        <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="site-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="watch.html">Watch</a></li>
+          <li><a href="experience.html">Experience</a></li>
+          <li><a href="shows.html">Shows</a></li>
+          <li><a href="gallery.html" class="active">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="watch.html">Watch</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="shows.html">Shows</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-bg-text" aria-hidden="true">LIVE</div>
+    <div class="page-hero-inner">
+      <span class="label reveal">Gallery</span>
+      <h1 class="reveal delay-1">In the Gallery.</h1>
+      <p class="reveal delay-2">Theatre nights, festival stages, club shows. Every image a moment from a live performance.</p>
+    </div>
+  </section>
+
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="inner">
+      <div class="gallery-grid" id="gallery-grid">
+
+        <!-- Column flows naturally — images stack top to bottom, left to right -->
+        <!-- Varying aspect ratios create the editorial feel -->
+
+        <div class="gallery-item reveal" onclick="openLightbox(0)">
+          <img src="SODS-Pottery-OnStage01.jpeg" alt="The S.O.D.S live on stage — Pottery Lane" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-1" onclick="openLightbox(1)">
+          <img src="SODS-Nev04.jpg" alt="Neville Kaye — lead vocals and guitar" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-2" onclick="openLightbox(2)">
+          <img src="SODS-Rich03.jpg" alt="Richie Wienburg — drums" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" onclick="openLightbox(3)">
+          <img src="SODS-PotteryStage_02.jpg" alt="The S.O.D.S full band on stage" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-1" onclick="openLightbox(4)">
+          <img src="SODS-Nev05.jpg" alt="Neville Kaye performing live" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-2" onclick="openLightbox(5)">
+          <img src="SODS-Chris03.jpg" alt="Chris Perry — bass" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" onclick="openLightbox(6)">
+          <img src="SODS-NevGuitar_01.jpg" alt="Neville Kaye — guitar close up" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-1" onclick="openLightbox(7)">
+          <img src="SODS-Pottery_BandSelfie01.jpg" alt="The S.O.D.S band photo" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-2" onclick="openLightbox(8)">
+          <img src="SODS-Pottery_Rich01.jpeg" alt="Richie Wienburg — drums and vocals" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" onclick="openLightbox(9)">
+          <img src="SODS-Nev03.jpg" alt="Neville Kaye — acoustic performance" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-1" onclick="openLightbox(10)">
+          <img src="SODS-Chris04.jpg" alt="Chris Perry — bass live" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-2" onclick="openLightbox(11)">
+          <img src="SODS-LaneCove_RichChris01.jpeg" alt="Richie and Chris at Lane Cove" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" onclick="openLightbox(12)">
+          <img src="Nev_01A.png" alt="Neville Kaye — lead vocals" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-1" onclick="openLightbox(13)">
+          <img src="SODS-Pottery_Chris01.png" alt="Chris Perry — bass backstage" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-2" onclick="openLightbox(14)">
+          <img src="SODS-Pottery_Mike01.jpeg" alt="Michael Samuel — guitar and keys" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" onclick="openLightbox(15)">
+          <img src="SODS-Pottery_Rich02.jpeg" alt="Richie Wienburg — live" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-1" onclick="openLightbox(16)">
+          <img src="SODS-Pottery_Chris02.jpeg" alt="Chris Perry — bass on stage" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal delay-2" onclick="openLightbox(17)">
+          <img src="SODS-Pottery_Rich03.jpeg" alt="Richie Wienburg — backstage portrait" loading="lazy">
+          <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+
+    <button class="lightbox-prev" onclick="changeLightbox(-1)" aria-label="Previous image">
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <div class="lightbox-img-wrap">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    </div>
+
+    <button class="lightbox-next" onclick="changeLightbox(1)" aria-label="Next image">
+      <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The S.O.D.S" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
+          <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
+          <p class="footer-credibility">Sold-out shows. Festival stages.<br>Repeat bookings across Sydney and beyond.</p>
+        </div>
+        <div>
+          <p class="footer-col-heading">Navigate</p>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watch.html">Watch</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="shows.html">Shows</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-heading">Book The Band</p>
+          <a href="contact.html" class="footer-cta-btn">Book The S.O.D.S</a>
+          <div class="social-links">
+            <a href="https://www.facebook.com/TheSongsOfDireStraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/thesongsofdirestraits/" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.youtube.com/@TheSongsofDireStraits" class="social-link" target="_blank" rel="noopener">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube
+            </a>
+            <a href="mailto:songsofdirestraits@gmail.com" class="social-link">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© 2026 The S.O.D.S. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ---- Header scroll ---- */
+    var header = document.getElementById('site-header');
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    /* ---- Hamburger ---- */
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var isOpen = false;
+    hamburger.addEventListener('click', function () {
+      isOpen = !isOpen;
+      hamburger.classList.toggle('open', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeLightbox(); if (isOpen) hamburger.click(); }
+      if (e.key === 'ArrowLeft') changeLightbox(-1);
+      if (e.key === 'ArrowRight') changeLightbox(1);
+    });
+
+    /* ---- Scroll reveal ---- */
+    var revealEls = document.querySelectorAll('.reveal');
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+    document.querySelectorAll('.page-hero .reveal').forEach(function (el) {
+      setTimeout(function () { el.classList.add('visible'); }, 80);
+    });
+
+    /* ---- Lightbox ---- */
+
+    // Build image list from all gallery items
+    var galleryItems = document.querySelectorAll('.gallery-item img');
+    var images = [];
+    galleryItems.forEach(function (img) {
+      images.push({ src: img.src, alt: img.alt });
+    });
+
+    var currentIndex = 0;
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var lightboxCounter = document.getElementById('lightbox-counter');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function changeLightbox(direction) {
+      if (!lightbox.classList.contains('active')) return;
+      lightboxImg.classList.add('fading');
+      setTimeout(function () {
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        updateLightbox();
+        lightboxImg.classList.remove('fading');
+      }, 180);
+    }
+
+    function updateLightbox() {
+      lightboxImg.src = images[currentIndex].src;
+      lightboxImg.alt = images[currentIndex].alt;
+      lightboxCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
+    }
+  </script>
+
+</body>
+</html>
