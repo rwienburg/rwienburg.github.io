@@ -397,7 +397,7 @@
 
 
     /* ==========================================================
-       BAND MEMBERS
+       BAND MEMBERS — FLIP CARDS
        ========================================================== */
     .members-section {
       padding: 100px 0;
@@ -430,72 +430,274 @@
     .members-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
+      gap: 24px;
+    }
+
+    /* Flip card container */
+    .flip-card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      width: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      position: relative;
+    }
+
+    .flip-card-back {
+      position: absolute;
+      top: 0; left: 0;
+      transform: rotateY(180deg);
+      background: var(--dark2);
       border: 1px solid var(--border);
     }
 
-    .member-card {
-      background: var(--dark2);
-      position: relative;
-      overflow: hidden;
-      transition: background var(--ease);
-    }
-
-    .member-card:hover { background: #181818; }
-
-    /* Red top border on hover */
-    .member-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--red);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-      z-index: 2;
-    }
-
-    .member-card:hover::before { transform: scaleX(1); }
-
-    .member-photo {
+    /* Front face */
+    .flip-front-photo {
       width: 100%;
       aspect-ratio: 3/4;
       overflow: hidden;
       position: relative;
     }
 
-    .member-photo img {
+    .flip-front-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center top;
       display: block;
-      filter: grayscale(20%) brightness(0.88) contrast(1.05);
-      transition: transform 0.5s ease, filter 0.5s ease;
+      filter: sepia(20%) brightness(0.9) contrast(1.05);
+      transition: transform 0.5s ease;
     }
 
-    .member-card:hover .member-photo img {
-      transform: scale(1.03);
-      filter: grayscale(0%) brightness(0.92) contrast(1.05);
-    }
-
-    /* Dark gradient over bottom of photo */
-    .member-photo::after {
+    .flip-front-photo::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 60%;
-      background: linear-gradient(to top, rgba(20,20,20,0.95) 0%, transparent 100%);
+      height: 70%;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
       pointer-events: none;
     }
 
-    .member-info {
-      padding: 24px 24px 28px;
+    .flip-front-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      z-index: 2;
     }
 
-    .member-number {
+    .flip-front-label {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .flip-front-name {
+      font-family: 'Georgia', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+
+    .flip-front-role {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* Hover hint */
+    .flip-hint {
+      position: absolute;
+      top: 12px; right: 12px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.5);
+      padding: 4px 8px;
+      z-index: 3;
+    }
+
+    /* Back face */
+    .flip-back-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .flip-back-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(15%) brightness(0.85) contrast(1.05);
+    }
+
+    .flip-back-photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 70%;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .flip-back-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      z-index: 2;
+    }
+
+    /* Instrument button */
+    .member-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 9px 16px;
+      background: transparent;
+      border: 1px solid rgba(196,32,32,0.5);
+      color: var(--grey);
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .member-btn:hover {
+      border-color: var(--red);
+      color: var(--white);
+      background: rgba(196,32,32,0.1);
+    }
+
+    .member-btn svg {
+      width: 16px; height: 16px;
+      fill: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================
+       BIO MODAL
+       ========================================================== */
+    .bio-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .bio-modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .bio-modal {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      max-width: 820px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      z-index: 2;
+    }
+
+    .bio-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* Modal photo */
+    .bio-modal-photo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bio-modal-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.85) contrast(1.05);
+    }
+
+    .bio-modal-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--dark) 100%);
+      pointer-events: none;
+    }
+
+    /* Modal content */
+    .bio-modal-content {
+      padding: 40px 36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bio-modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 36px; height: 36px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s ease;
+      z-index: 3;
+    }
+
+    .bio-modal-close:hover { border-color: var(--red); }
+    .bio-modal-close svg { width: 14px; height: 14px; fill: var(--white); }
+
+    .bio-modal-role {
       font-family: 'Helvetica Neue', sans-serif;
       font-size: 9px;
       font-weight: 700;
@@ -506,33 +708,63 @@
       display: block;
     }
 
-    .member-name {
+    .bio-modal-name {
       font-family: 'Georgia', serif;
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 700;
       color: var(--white);
-      margin-bottom: 6px;
-      line-height: 1.2;
+      margin-bottom: 20px;
+      line-height: 1.1;
     }
 
-    .member-role {
+    /* Wembley quote */
+    .bio-modal-quote {
+      border-left: 2px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 24px;
+    }
+
+    .bio-modal-quote-text {
+      font-family: 'Georgia', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .bio-modal-quote-attr {
       font-family: 'Helvetica Neue', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-size: 10px;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--grey);
-      margin-bottom: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
     }
 
-    .member-bio {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 13px;
-      line-height: 1.7;
-      color: rgba(160,160,160,0.8);
+    .bio-modal-divider {
+      width: 32px;
+      height: 1px;
+      background: var(--red);
+      margin-bottom: 20px;
     }
+
+    .bio-modal-text {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--grey);
+    }
+
+    .bio-modal-text p {
+      margin-bottom: 14px;
+    }
+
+    .bio-modal-text p:last-child { margin-bottom: 0; }
+
+    /* Modal scrollbar */
+    .bio-modal::-webkit-scrollbar { width: 4px; }
+    .bio-modal::-webkit-scrollbar-track { background: var(--dark2); }
+    .bio-modal::-webkit-scrollbar-thumb { background: var(--red); }
 
 
     /* ==========================================================
@@ -716,11 +948,15 @@
        ========================================================== */
     @media (max-width: 1024px) {
       .members-grid { grid-template-columns: repeat(2, 1fr); }
+      .bio-modal { grid-template-columns: 220px 1fr; }
     }
 
     @media (max-width: 900px) {
       .bio-grid { grid-template-columns: 1fr; gap: 48px; }
       .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .bio-modal { grid-template-columns: 1fr; max-width: 480px; }
+      .bio-modal-photo { height: 280px; }
+      .bio-modal-photo::after { background: linear-gradient(to top, var(--dark) 20%, transparent 100%); }
     }
 
     @media (max-width: 768px) {
@@ -733,11 +969,12 @@
     @media (max-width: 600px) {
       .inner { padding: 0 20px; }
       .site-footer { padding: 48px 20px 28px; }
-      .members-grid { grid-template-columns: 1fr; }
+      .members-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
       .bio-section, .members-section, .booking { padding: 72px 0; }
       .page-hero { padding: 120px 0 56px; }
       .bio-stats { grid-template-columns: repeat(3, 1fr); }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .bio-modal-content { padding: 28px 20px; }
     }
   </style>
   <link rel="icon" type="image/png" href="SODS-Pick-White01.png">
@@ -840,66 +1077,166 @@
       <div class="members-header">
         <span class="label reveal">The Lineup</span>
         <h2 class="reveal delay-1">Meet the band.</h2>
-        <p class="reveal delay-2">Four experienced performers. One tight, groove-driven live act.</p>
+        <p class="reveal delay-2">Hover to see where it all started. Click their story to find out how they got here.</p>
       </div>
 
       <div class="members-grid">
 
-        <!-- Neville Kaye -->
-        <div class="member-card reveal">
-          <div class="member-photo">
-            <img src="Nev_01A.png" alt="Neville Kaye Lead vocals and guitar">
-          </div>
-          <div class="member-info">
-            <span class="member-number">01</span>
-            <h3 class="member-name">Neville Kaye</h3>
-            <p class="member-role">Lead Vocals · Guitar</p>
-            <p class="member-bio">Neville Kaye is a Sydney-based singer-songwriter and guitarist, originally from Johannesburg, South Africa. Since picking up the guitar at 18, he has built a prolific independent career, releasing 16 albums across rock, jazz, and contemporary styles. His songwriting has earned international recognition, including the L.A. Music Award for Best Classic Rock Artist, and multiple Australian Songwriting Awards. In 2022 he took first place at the ASA Awards for his jazz composition Dance On A Summer Night. In 2025, Neville released his final solo album turning his full attention to the stage. As the frontman of The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span>, he brings one of rock's most iconic catalogues to life with authenticity, energy, and his own unmistakable voice.</p>
-          </div>
-        </div>
-
-        <!-- Richie Wienburg -->
-        <div class="member-card reveal delay-1">
-          <div class="member-photo">
-            <img src="SODS-Pottery_Rich03.jpeg" alt="Richie Wienburg Drums and backing vocals">
-          </div>
-          <div class="member-info">
-            <span class="member-number">02</span>
-            <h3 class="member-name">Richie Wienburg</h3>
-            <p class="member-role">Drums · Backing Vocals</p>
-            <p class="member-bio">Richie Wienburg is a Sydney-based drummer and backing vocalist, known for his dynamic, feel-driven playing and instinctive musicality. Originally from South Africa, Richie picked up the drums at 19 and quickly immersed himself in the live music scene with Cape Town alternative rock band The Damn Pesky Demons. Entirely self-taught, he made an immediate impact, winning Best Drummer at a local battle-of-the-bands competition just four weeks after starting. The band performed regularly over four years, blending originals with covers from Smashing Pumpkins, Red Hot Chili Peppers, and Nirvana. After relocating to London, Richie stepped away from music for a number of years before returning behind the kit in 2022 as a founding member of Kodak Kids. He transitioned from an acoustic Pearl kit to a Roland electronic kit, bringing precision and versatility to his playing. Richie now drives the live show for The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> with tight groove, energy, and musical sensitivity, anchoring the band while adding his own edge to every performance.</p>
-          </div>
-        </div>
-
-        <!-- Chris Perry -->
-        <div class="member-card reveal delay-2">
-          <div class="member-photo">
-            <img src="SODS-Pottery_Chris01.png" alt="Chris Perry Bass">
-          </div>
-          <div class="member-info">
-            <span class="member-number">03</span>
-            <h3 class="member-name">Chris Perry</h3>
-            <p class="member-role">Bass</p>
-            <p class="member-bio">Solid, locked in, and precise. Chris holds the low end with authority the kind of bass playing that you feel as much as you hear, and that gives the band its characteristic weight and depth.</p>
+        <!-- NEVILLE KAYE -->
+        <div class="flip-card reveal" onclick="openBioModal('neville')">
+          <div class="flip-card-inner">
+            <!-- Front: childhood photo -->
+            <div class="flip-card-front">
+              <div class="flip-front-photo">
+                <img src="106197.jpg" alt="Neville Kaye as a child">
+                <span class="flip-hint">Hover</span>
+              </div>
+              <div class="flip-front-info">
+                <span class="flip-front-label">01</span>
+                <p class="flip-front-name">Neville Kaye</p>
+                <p class="flip-front-role">Lead Vocals · Guitar</p>
+              </div>
+            </div>
+            <!-- Back: adult photo -->
+            <div class="flip-card-back">
+              <div class="flip-back-photo">
+                <img src="Nev_01A.png" alt="Neville Kaye">
+              </div>
+              <div class="flip-back-info">
+                <p class="flip-front-name">Neville Kaye</p>
+                <p class="flip-front-role">Lead Vocals · Guitar</p>
+                <button class="member-btn" onclick="event.stopPropagation(); openBioModal('neville')">
+                  <!-- Electric guitar icon -->
+                  <svg viewBox="0 0 24 24"><path d="M1.22 16.58L3 14.8l1.37 1.37-1.78 1.78c-.49.49-.49 1.28 0 1.78l1.41 1.41c.49.49 1.28.49 1.78 0l1.78-1.78 1.37 1.37-1.78 1.78c-1.27 1.26-3.32 1.26-4.59 0l-1.41-1.41c-1.27-1.27-1.27-3.32.07-4.52zm19.56-11.14c1.27 1.27 1.27 3.32 0 4.59l-1.41 1.41c-1.27 1.27-3.32 1.27-4.59 0L13.4 10.1l-1.54 1.54 1.37 1.37-1.41 1.41-1.37-1.37-1.06 1.06 1.37 1.37-1.41 1.41-1.37-1.37-2.47 2.47-1.41-1.41 8.75-8.75-.34-.34c-.63-.63-.63-1.66 0-2.29l.71-.71c.63-.63 1.66-.63 2.29 0l.34.34.71-.71c1.27-1.27 3.32-1.27 4.59 0l1.41 1.41z"/></svg>
+                  His Story
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Michael Samuel -->
-        <div class="member-card reveal delay-3">
-          <div class="member-photo">
-            <img src="SODS-Pottery_Mike01.jpeg" alt="Michael Samuel Guitar, keyboards and backing vocals">
+        <!-- RICHIE WIENBURG -->
+        <div class="flip-card reveal delay-1" onclick="openBioModal('richie')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-front-photo">
+                <img src="106192.jpg" alt="Richie Wienburg as a child">
+                <span class="flip-hint">Hover</span>
+              </div>
+              <div class="flip-front-info">
+                <span class="flip-front-label">02</span>
+                <p class="flip-front-name">Richie Wienburg</p>
+                <p class="flip-front-role">Drums · Backing Vocals</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <div class="flip-back-photo">
+                <img src="SODS-Pottery_Rich03.jpeg" alt="Richie Wienburg">
+              </div>
+              <div class="flip-back-info">
+                <p class="flip-front-name">Richie Wienburg</p>
+                <p class="flip-front-role">Drums · Backing Vocals</p>
+                <button class="member-btn" onclick="event.stopPropagation(); openBioModal('richie')">
+                  <!-- Drum icon -->
+                  <svg viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4zm6 10.5c0 1.38-2.69 2.5-6 2.5s-6-1.12-6-2.5V15c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-1.5zm0-4c0 1.38-2.69 2.5-6 2.5S6 10.88 6 9.5V11c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V9.5zm-6-1C8.69 8.5 6 7.38 6 6s2.69-2.5 6-2.5S18 4.62 18 6s-2.69 2.5-6 2.5z"/></svg>
+                  His Story
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="member-info">
-            <span class="member-number">04</span>
-            <h3 class="member-name">Michael Samuel</h3>
-            <p class="member-role">Guitar · Keyboards · Backing Vocals</p>
-            <p class="member-bio">The harmonic backbone of the band. Michael's guitar and keyboard work fills the space between Neville's lead and the rhythm section bringing texture, colour, and versatility to every song.</p>
+        </div>
+
+        <!-- CHRIS PERRY -->
+        <div class="flip-card reveal delay-2" onclick="openBioModal('chris')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-front-photo">
+                <img src="106199.png" alt="Chris Perry — reimagined">
+                <span class="flip-hint">Hover</span>
+              </div>
+              <div class="flip-front-info">
+                <span class="flip-front-label">03</span>
+                <p class="flip-front-name">Chris Perry</p>
+                <p class="flip-front-role">Bass</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <div class="flip-back-photo">
+                <img src="106198.jpg" alt="Chris Perry">
+              </div>
+              <div class="flip-back-info">
+                <p class="flip-front-name">Chris Perry</p>
+                <p class="flip-front-role">Bass</p>
+                <button class="member-btn" onclick="event.stopPropagation(); openBioModal('chris')">
+                  <!-- Bass guitar icon -->
+                  <svg viewBox="0 0 24 24"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/></svg>
+                  His Story
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MICHAEL SAMUEL -->
+        <div class="flip-card reveal delay-3" onclick="openBioModal('michael')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-front-photo">
+                <img src="106196.jpg" alt="Michael Samuel as a child">
+                <span class="flip-hint">Hover</span>
+              </div>
+              <div class="flip-front-info">
+                <span class="flip-front-label">04</span>
+                <p class="flip-front-name">Michael Samuel</p>
+                <p class="flip-front-role">Guitar · Keys · Vocals</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <div class="flip-back-photo">
+                <img src="SODS-Pottery_Mike01.jpeg" alt="Michael Samuel">
+              </div>
+              <div class="flip-back-info">
+                <p class="flip-front-name">Michael Samuel</p>
+                <p class="flip-front-role">Guitar · Keys · Vocals</p>
+                <button class="member-btn" onclick="event.stopPropagation(); openBioModal('michael')">
+                  <!-- Guitar + keys icon -->
+                  <svg viewBox="0 0 24 24"><path d="M20 3H4v2h16V3zm0 4H4v2h16V7zm-8 4H4v2h8v-2zm-8 4h8v2H4v-2zm13 .88V14h-2v1.88c-.73.28-1.25.99-1.25 1.82C13.75 18.99 14.76 20 16 20s2.25-1.01 2.25-2.3c0-.83-.52-1.54-1.25-1.82z"/></svg>
+                  His Story
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
   </section>
+
+
+  <!-- BIO MODALS -->
+  <div class="bio-modal-overlay" id="bio-modal-overlay" onclick="closeBioModal()">
+    <div class="bio-modal" id="bio-modal" onclick="event.stopPropagation()">
+
+      <div class="bio-modal-photo">
+        <img id="modal-photo" src="" alt="">
+      </div>
+
+      <div class="bio-modal-content">
+        <button class="bio-modal-close" onclick="closeBioModal()">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <span class="bio-modal-role" id="modal-role"></span>
+        <h2 class="bio-modal-name" id="modal-name"></h2>
+        <div class="bio-modal-quote">
+          <p class="bio-modal-quote-text" id="modal-quote"></p>
+          <p class="bio-modal-quote-attr" id="modal-quote-attr"></p>
+        </div>
+        <div class="bio-modal-divider"></div>
+        <div class="bio-modal-text" id="modal-bio"></div>
+      </div>
+
+    </div>
+  </div>
 
 
   <!-- BOOKING CTA -->
@@ -993,7 +1330,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && isOpen) hamburger.click();
+      if (e.key === 'Escape') { closeBioModal(); if (isOpen) hamburger.click(); }
     });
 
     var revealEls = document.querySelectorAll('.reveal');
@@ -1010,6 +1347,61 @@
     document.querySelectorAll('.page-hero .reveal').forEach(function (el) {
       setTimeout(function () { el.classList.add('visible'); }, 80);
     });
+
+    /* ---- Bio Modal Data ---- */
+    var members = {
+      neville: {
+        photo: 'Nev02A.png',
+        role: 'Lead Vocals · Guitar',
+        name: 'Neville Kaye',
+        quote: '"Fuck all of you who thought I never had a chance."',
+        quoteAttr: 'Freddie Mercury hands him the mic. Wembley Stadium.',
+        bio: '<p>Neville Kaye is a Sydney-based singer-songwriter and guitarist, originally from Johannesburg, South Africa. Since picking up the guitar at 18, he has built a prolific independent career, releasing 16 albums across rock, jazz, and contemporary styles.</p><p>His songwriting has earned international recognition, including the L.A. Music Award for Best Classic Rock Artist, and multiple Australian Songwriting Awards. In 2022 he took first place at the ASA Awards for his jazz composition Dance On A Summer Night.</p><p>In 2025, Neville released his final solo album, turning his full attention to the stage. As the frontman of The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span>, he brings one of rock\'s most iconic catalogues to life with authenticity, energy, and his own unmistakable voice.</p>'
+      },
+      richie: {
+        photo: 'SODS-Pottery_Rich02.jpeg',
+        role: 'Drums · Backing Vocals',
+        name: 'Richie Wienburg',
+        quote: '"Drugs are bad. M\'kay."',
+        quoteAttr: 'Shannon Hoon, Chris Cornell, Layne Staley and Scott Weiland hand him the mic. Wembley Stadium.',
+        bio: '<p>Richie Wienburg is a Sydney-based drummer and backing vocalist, known for his dynamic, feel-driven playing and instinctive musicality. Originally from South Africa, Richie picked up the drums at 19 and quickly immersed himself in the live music scene with Cape Town alternative rock band The Damn Pesky Demons.</p><p>Entirely self-taught, he made an immediate impact, winning Best Drummer at a local battle-of-the-bands competition just four weeks after starting. The band performed regularly over four years, blending originals with covers from Smashing Pumpkins, Red Hot Chili Peppers, and Nirvana.</p><p>After relocating to London, Richie stepped away from music for a number of years before returning behind the kit in 2022 as a founding member of Kodak Kids. He transitioned from an acoustic Pearl kit to a Roland electronic kit, bringing precision and versatility to his playing.</p><p>Richie now drives the live show for The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> with tight groove, energy, and musical sensitivity, anchoring the band while adding his own edge to every performance.</p>'
+      },
+      chris: {
+        photo: '106198.jpg',
+        role: 'Bass',
+        name: 'Chris Perry',
+        quote: '"Wembley. Thank you. Goodnight."',
+        quoteAttr: 'Chris takes the mic. Drops it. Walks off.',
+        bio: '<p>Chris Perry is a Sydney-based professional bass guitarist with a musical life that started far earlier, and far more classically, than most people would expect. He began on violin at seven, switched to guitar and bass at fourteen, and spent five years playing professionally in Adelaide before arriving in Sydney at twenty-three.</p><p>Classically trained but drawn instinctively toward jazz and fusion, Chris found that the bass offered something broader in those genres: more scope, more conversation, more room to move. Sydney brought show bands, then three years with jump jive outfit The Anthill Mob, then a string of jazz and blues ensembles including a sixteen-piece swing big band.</p><p>In 1995 he co-founded The Moods, a band that ran for eighteen years across pubs, clubs, festivals, resorts, weddings, and funerals. After a break he joined The Jive Bombers, spending eight years playing, writing, and singing with one of Sydney\'s most established acts.</p><p>He now freelances across a range of ensembles and musical styles. The bands that shaped him read like a greatest hits of the last fifty years: The Beatles, ABBA, Supertramp, The Police, Talking Heads, AC/DC, and of course Dire Straits.</p><p>One thing you probably don\'t know about Chris: he sets his alarm early specifically so he can go back to sleep.</p>'
+      },
+      michael: {
+        photo: 'SODS-Pottery_Mike01.jpeg',
+        role: 'Guitar · Keyboards · Harmonica · Backing Vocals',
+        name: 'Michael Samuel',
+        quote: '"I\'ve just realised today\'s the best day of my life!"',
+        quoteAttr: 'Stealing a line from Bob Geldof. Wembley Stadium.',
+        bio: '<p>Michael Samuel is a Sydney-based guitarist, vocalist, and multi-instrumentalist, born in Hong Kong and raised in London before making Sydney home at the age of eleven. He picked up the guitar at eight, shaped early on by Bruce Springsteen and The Beatles, and discovered Dire Straits at twelve, a catalogue that would stay with him. By his final college recital in 2014, Sultans of Swing had made it onto the setlist.</p><p>Before joining The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span>, Michael played with Eagles tribute act Desperado, performed alongside Johnny Cash tribute singer Monty Cotton, and spent seven years with originals band Mass Landing. His most memorable gig to date was a charity event in Xian, China in 2019.</p><p>He currently juggles The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> with two other active projects: Staceys Got A Gun and Echo Beats. When he\'s not on stage, Michael works as a data entry administrator, a job he\'s held for over eleven years. He\'ll tell you voice impersonations are his backup plan if music ever stops working out.</p><p>A good night for Michael is simple: the sound is balanced, everyone\'s playing well, and the audience is completely in it.</p>'
+      }
+    };
+
+    function openBioModal(id) {
+      var m = members[id];
+      if (!m) return;
+      document.getElementById('modal-photo').src = m.photo;
+      document.getElementById('modal-photo').alt = m.name;
+      document.getElementById('modal-role').textContent = m.role;
+      document.getElementById('modal-name').textContent = m.name;
+      document.getElementById('modal-quote').textContent = m.quote;
+      document.getElementById('modal-quote-attr').textContent = m.quoteAttr;
+      document.getElementById('modal-bio').innerHTML = m.bio;
+      document.getElementById('bio-modal-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBioModal() {
+      document.getElementById('bio-modal-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
   </script>
 
 </body>
