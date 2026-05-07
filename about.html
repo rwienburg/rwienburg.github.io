@@ -436,6 +436,7 @@
     /* Flip card container */
     .flip-card {
       perspective: 1000px;
+      -webkit-perspective: 1000px;
       cursor: pointer;
     }
 
@@ -444,10 +445,12 @@
       width: 100%;
       transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
     }
 
     .flip-card:hover .flip-card-inner {
       transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
     }
 
     .flip-card-front,
@@ -455,13 +458,16 @@
       width: 100%;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
       position: relative;
+      isolation: isolate;
     }
 
     .flip-card-back {
       position: absolute;
       top: 0; left: 0;
       transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
       background: var(--dark2);
       border: 1px solid var(--border);
     }
@@ -1088,7 +1094,7 @@
             <!-- Front: childhood photo -->
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="106197.jpg" alt="Neville Kaye as a child">
+                <img src="Nev_k.jpeg" alt="Neville Kaye as a child">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1120,7 +1126,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="106192.jpg" alt="Richie Wienburg as a child">
+                <img src="Rich_k.jpeg" alt="Richie Wienburg as a child">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1151,7 +1157,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="106199.png" alt="Chris Perry — reimagined">
+                <img src="Chris_k.jpeg" alt="Chris Perry — reimagined">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1162,7 +1168,7 @@
             </div>
             <div class="flip-card-back">
               <div class="flip-back-photo">
-                <img src="106198.jpg" alt="Chris Perry">
+                <img src="SODS-Pottery_Chris02.jpeg" alt="Chris Perry">
               </div>
               <div class="flip-back-info">
                 <p class="flip-front-name">Chris Perry</p>
@@ -1182,7 +1188,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="106196.jpg" alt="Michael Samuel as a child">
+                <img src="Michael_k.jpeg" alt="Michael Samuel as a child">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1367,7 +1373,7 @@
         bio: '<p>Richie Wienburg is a Sydney-based drummer and backing vocalist, known for his dynamic, feel-driven playing and instinctive musicality. Originally from South Africa, Richie picked up the drums at 19 and quickly immersed himself in the live music scene with Cape Town alternative rock band The Damn Pesky Demons.</p><p>Entirely self-taught, he made an immediate impact, winning Best Drummer at a local battle-of-the-bands competition just four weeks after starting. The band performed regularly over four years, blending originals with covers from Smashing Pumpkins, Red Hot Chili Peppers, and Nirvana.</p><p>After relocating to London, Richie stepped away from music for a number of years before returning behind the kit in 2022 as a founding member of Kodak Kids. He transitioned from an acoustic Pearl kit to a Roland electronic kit, bringing precision and versatility to his playing.</p><p>Richie now drives the live show for The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> with tight groove, energy, and musical sensitivity, anchoring the band while adding his own edge to every performance.</p>'
       },
       chris: {
-        photo: '106198.jpg',
+        photo: 'SODS-Pottery_Chris02.jpeg',
         role: 'Bass',
         name: 'Chris Perry',
         quote: '"Wembley. Thank you. Goodnight."',
