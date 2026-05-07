@@ -1069,8 +1069,12 @@
 
       <!-- Proof images — full width below bio grid -->
       <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:48px;">
-        <img src="SODS-PotteryLane-SoldOut.jpeg" alt="Pottery Lane Performance Space — Sold Out" style="width:100%; display:block; filter:brightness(0.9);">
-        <img src="SODS-Nev-Mike-RadioInterview01.jpeg" alt="Neville and Michael — radio interview" style="width:100%; display:block; filter:brightness(0.9);">
+        <div style="overflow:hidden; aspect-ratio:1/1;">
+          <img src="SODS-PotteryLane-SoldOut.jpeg" alt="Pottery Lane Performance Space — Sold Out" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block; filter:brightness(0.9);">
+        </div>
+        <div style="overflow:hidden; aspect-ratio:1/1;">
+          <img src="SODS-Nev-Mike-RadioInterview01.jpeg" alt="Neville and Michael — radio interview" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block; filter:brightness(0.9);">
+        </div>
       </div>
 
     </div>
@@ -1091,10 +1095,10 @@
         <!-- NEVILLE KAYE -->
         <div class="flip-card reveal" onclick="openBioModal('neville')">
           <div class="flip-card-inner">
-            <!-- Front: childhood photo -->
+            <!-- Front: adult photo -->
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="Nev_k.jpeg" alt="Neville Kaye as a child">
+                <img src="Nev_bio2.jpeg" alt="Neville Kaye">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1103,16 +1107,15 @@
                 <p class="flip-front-role">Lead Vocals · Guitar</p>
               </div>
             </div>
-            <!-- Back: adult photo -->
+            <!-- Back: childhood photo -->
             <div class="flip-card-back">
               <div class="flip-back-photo">
-                <img src="Nev_bio2.jpeg" alt="Neville Kaye">
+                <img src="Nev_k.jpeg" alt="Neville Kaye as a child">
               </div>
               <div class="flip-back-info">
                 <p class="flip-front-name">Neville Kaye</p>
                 <p class="flip-front-role">Lead Vocals · Guitar</p>
                 <button class="member-btn" onclick="event.stopPropagation(); openBioModal('neville')">
-                  <!-- Electric guitar icon -->
                   <svg viewBox="0 0 24 24"><path d="M1.22 16.58L3 14.8l1.37 1.37-1.78 1.78c-.49.49-.49 1.28 0 1.78l1.41 1.41c.49.49 1.28.49 1.78 0l1.78-1.78 1.37 1.37-1.78 1.78c-1.27 1.26-3.32 1.26-4.59 0l-1.41-1.41c-1.27-1.27-1.27-3.32.07-4.52zm19.56-11.14c1.27 1.27 1.27 3.32 0 4.59l-1.41 1.41c-1.27 1.27-3.32 1.27-4.59 0L13.4 10.1l-1.54 1.54 1.37 1.37-1.41 1.41-1.37-1.37-1.06 1.06 1.37 1.37-1.41 1.41-1.37-1.37-2.47 2.47-1.41-1.41 8.75-8.75-.34-.34c-.63-.63-.63-1.66 0-2.29l.71-.71c.63-.63 1.66-.63 2.29 0l.34.34.71-.71c1.27-1.27 3.32-1.27 4.59 0l1.41 1.41z"/></svg>
                   His Story
                 </button>
@@ -1126,7 +1129,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="Rich_k.jpeg" alt="Richie Wienburg as a child">
+                <img src="SODS-Pottery_Rich03.jpeg" alt="Richie Wienburg">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1137,13 +1140,12 @@
             </div>
             <div class="flip-card-back">
               <div class="flip-back-photo">
-                <img src="SODS-Pottery_Rich03.jpeg" alt="Richie Wienburg">
+                <img src="Rich_k.jpeg" alt="Richie Wienburg as a child">
               </div>
               <div class="flip-back-info">
                 <p class="flip-front-name">Richie Wienburg</p>
                 <p class="flip-front-role">Drums · Backing Vocals</p>
                 <button class="member-btn" onclick="event.stopPropagation(); openBioModal('richie')">
-                  <!-- Drum icon -->
                   <svg viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4zm6 10.5c0 1.38-2.69 2.5-6 2.5s-6-1.12-6-2.5V15c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-1.5zm0-4c0 1.38-2.69 2.5-6 2.5S6 10.88 6 9.5V11c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V9.5zm-6-1C8.69 8.5 6 7.38 6 6s2.69-2.5 6-2.5S18 4.62 18 6s-2.69 2.5-6 2.5z"/></svg>
                   His Story
                 </button>
@@ -1157,7 +1159,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="Chris_k.jpeg" alt="Chris Perry — reimagined">
+                <img src="SODS-Pottery_Chris02.jpeg" alt="Chris Perry">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1168,13 +1170,12 @@
             </div>
             <div class="flip-card-back">
               <div class="flip-back-photo">
-                <img src="SODS-Pottery_Chris02.jpeg" alt="Chris Perry">
+                <img src="Chris_k.jpeg" alt="Chris Perry reimagined as a child">
               </div>
               <div class="flip-back-info">
                 <p class="flip-front-name">Chris Perry</p>
                 <p class="flip-front-role">Bass</p>
                 <button class="member-btn" onclick="event.stopPropagation(); openBioModal('chris')">
-                  <!-- Bass guitar icon -->
                   <svg viewBox="0 0 24 24"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/></svg>
                   His Story
                 </button>
@@ -1188,7 +1189,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="flip-front-photo">
-                <img src="Michael_k.jpeg" alt="Michael Samuel as a child">
+                <img src="Mike_bio2.jpeg" alt="Michael Samuel">
                 <span class="flip-hint">Hover</span>
               </div>
               <div class="flip-front-info">
@@ -1199,13 +1200,12 @@
             </div>
             <div class="flip-card-back">
               <div class="flip-back-photo">
-                <img src="Mike_bio2.jpeg" alt="Michael Samuel">
+                <img src="Michael_k.jpeg" alt="Michael Samuel as a child">
               </div>
               <div class="flip-back-info">
                 <p class="flip-front-name">Michael Samuel</p>
                 <p class="flip-front-role">Guitar · Keys · Vocals</p>
                 <button class="member-btn" onclick="event.stopPropagation(); openBioModal('michael')">
-                  <!-- Guitar + keys icon -->
                   <svg viewBox="0 0 24 24"><path d="M20 3H4v2h16V3zm0 4H4v2h16V7zm-8 4H4v2h8v-2zm-8 4h8v2H4v-2zm13 .88V14h-2v1.88c-.73.28-1.25.99-1.25 1.82C13.75 18.99 14.76 20 16 20s2.25-1.01 2.25-2.3c0-.83-.52-1.54-1.25-1.82z"/></svg>
                   His Story
                 </button>
