@@ -1161,11 +1161,11 @@
 
     .listen-popover {
       position: absolute; top: calc(100% + 14px); right: 0;
-      width: 260px;
+      width: 320px;
       background: var(--dark2, #141414);
       border: 1px solid var(--border);
       border-left: 2px solid var(--red);
-      padding: 18px 20px;
+      padding: 16px;
       z-index: 10000;
       opacity: 0; visibility: hidden; transform: translateY(-6px);
       transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
@@ -1193,7 +1193,7 @@
     .listen-popover audio { width: 100%; accent-color: var(--red); }
 
     @media (max-width: 768px) {
-      .listen-popover { right: -12px; width: 230px; }
+      .listen-popover { right: -12px; width: 280px; }
     }
 
   </style>
@@ -1622,9 +1622,42 @@
       hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     });
 
+    var LISTEN_KEY = 'sodsInterviewProgress';
+    function listenGetSaved() {
+      try {
+        var v = parseFloat(localStorage.getItem(LISTEN_KEY));
+        return isNaN(v) ? 0 : v;
+      } catch (e) { return 0; }
+    }
+    function listenSave(t) {
+      try { localStorage.setItem(LISTEN_KEY, String(t)); } catch (e) {}
+    }
+    function wireInterviewAudio(audioEl, otherEl) {
+      if (!audioEl) return;
+      audioEl.addEventListener('loadedmetadata', function () {
+        if (audioEl.currentTime < 1) {
+          var saved = listenGetSaved();
+          if (saved > 1 && saved < audioEl.duration - 3) audioEl.currentTime = saved;
+        }
+      });
+      audioEl.addEventListener('play', function () {
+        if (otherEl && !otherEl.paused) otherEl.pause();
+      });
+      audioEl.addEventListener('pause', function () { listenSave(audioEl.currentTime); });
+      audioEl.addEventListener('ended', function () { listenSave(0); });
+      audioEl.addEventListener('timeupdate', function () {
+        if (Math.floor(audioEl.currentTime) % 3 === 0) listenSave(audioEl.currentTime);
+      });
+    }
+
     var listenBtn = document.getElementById('listen-btn');
     var listenAudio = document.getElementById('listen-audio');
     var listenPopover = document.getElementById('listen-popover');
+    var aboutAudio = document.getElementById('about-interview-audio');
+
+    wireInterviewAudio(listenAudio, aboutAudio);
+    wireInterviewAudio(aboutAudio, listenAudio);
+
     if (listenBtn && listenAudio) {
       listenBtn.addEventListener('click', function () {
         if (listenAudio.paused) {
@@ -1641,10 +1674,12 @@
       listenAudio.addEventListener('pause', function () {
         listenBtn.classList.remove('playing');
       });
-      listenAudio.addEventListener('ended', function () {
-        listenBtn.classList.remove('playing');
-      });
     }
+
+    window.addEventListener('pagehide', function () {
+      if (listenAudio && !listenAudio.paused) listenSave(listenAudio.currentTime);
+      if (aboutAudio && !aboutAudio.paused) listenSave(aboutAudio.currentTime);
+    });
 
     mobileMenu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
