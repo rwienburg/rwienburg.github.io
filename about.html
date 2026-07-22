@@ -1069,6 +1069,85 @@
       .footer-bottom { flex-direction: column; align-items: flex-start; }
       .bio-modal-content { padding: 28px 20px; }
     }
+    /* ==========================================================
+       LISTEN WIDGET (HEADER)
+       ========================================================== */
+    .nav-wrap { display: flex; align-items: center; gap: 22px; }
+
+    .listen-widget { position: relative; display: flex; align-items: center; }
+
+    .listen-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--grey);
+      position: relative;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .listen-btn:hover,
+    .listen-btn:focus-visible,
+    .listen-widget:hover .listen-btn,
+    .listen-widget:focus-within .listen-btn { color: var(--white); border-color: var(--red); }
+
+    .listen-btn.playing { color: var(--red); border-color: var(--red); background: rgba(196,32,32,0.12); }
+
+    .listen-icon { width: 16px; height: 16px; fill: currentColor; }
+
+    .listen-bars {
+      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+      display: none; align-items: flex-end; gap: 2px; height: 8px;
+    }
+
+    .listen-btn.playing .listen-bars { display: flex; }
+
+    .listen-bars span { width: 2px; background: var(--red); animation: listen-bar 0.9s ease-in-out infinite; }
+    .listen-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
+    .listen-bars span:nth-child(2) { height: 8px; animation-delay: 0.2s; }
+    .listen-bars span:nth-child(3) { height: 5px; animation-delay: 0.4s; }
+
+    @keyframes listen-bar { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
+
+    .listen-popover {
+      position: absolute; top: calc(100% + 14px); right: 0;
+      width: 260px;
+      background: var(--dark2, #141414);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      padding: 18px 20px;
+      z-index: 10000;
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    }
+
+    .listen-widget:hover .listen-popover,
+    .listen-widget:focus-within .listen-popover,
+    .listen-popover.open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .listen-popover-label {
+      display: block;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    .listen-popover-text {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 12px; line-height: 1.6;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+
+    .listen-popover audio { width: 100%; accent-color: var(--red); }
+
+    @media (max-width: 768px) {
+      .listen-popover { right: -12px; width: 230px; }
+    }
+
   </style>
   <link rel="icon" type="image/png" href="SODS-Pick-White01.png">
 </head>
@@ -1081,7 +1160,7 @@
         <span class="logo-the">The</span>
         <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
       </a>
-      <nav aria-label="Main navigation">
+      <nav aria-label="Main navigation" class="nav-wrap">
         <ul class="site-nav">
           <li><a href="index.html">Home</a></li>
           <li><a href="watch.html">Watch</a></li>
@@ -1091,6 +1170,20 @@
           <li><a href="about.html" class="active">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
+        <div class="listen-widget">
+          <button class="listen-btn" id="listen-btn" type="button" aria-label="Listen to our radio interview" aria-haspopup="true" aria-expanded="false">
+            <svg class="listen-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
+            <span class="listen-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          </button>
+          <div class="listen-popover" id="listen-popover" role="dialog" aria-label="Radio interview player">
+            <span class="listen-popover-label">On Air</span>
+            <p class="listen-popover-text">Neville &amp; Michael on Radio Northern Beaches — 20 July 2026. Click the icon to listen.</p>
+            <audio id="listen-audio" controls preload="none">
+              <source src="audio/sods-interview-rnb-20jul2026.mp3" type="audio/mpeg">
+              <a href="audio/sods-interview-rnb-20jul2026.mp3">Download the interview</a>
+            </audio>
+          </div>
+        </div>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -1439,6 +1532,30 @@
       mobileMenu.classList.toggle('open', isOpen);
       hamburger.setAttribute('aria-expanded', isOpen);
     });
+
+    var listenBtn = document.getElementById('listen-btn');
+    var listenAudio = document.getElementById('listen-audio');
+    var listenPopover = document.getElementById('listen-popover');
+    if (listenBtn && listenAudio) {
+      listenBtn.addEventListener('click', function () {
+        if (listenAudio.paused) {
+          listenAudio.play();
+        } else {
+          listenAudio.pause();
+        }
+      });
+      listenAudio.addEventListener('play', function () {
+        listenBtn.classList.add('playing');
+        listenBtn.setAttribute('aria-expanded', 'true');
+        if (listenPopover) listenPopover.classList.add('open');
+      });
+      listenAudio.addEventListener('pause', function () {
+        listenBtn.classList.remove('playing');
+      });
+      listenAudio.addEventListener('ended', function () {
+        listenBtn.classList.remove('playing');
+      });
+    }
 
     mobileMenu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
