@@ -397,6 +397,81 @@
 
 
     /* ==========================================================
+       ON-AIR / AUDIO SECTION
+       ========================================================== */
+    .press-section {
+      padding: 100px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .press-intro {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .press-intro h2 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .press-intro p {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--grey);
+    }
+
+    .audio-player-card {
+      max-width: 640px;
+      margin: 40px auto 0;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      padding: 28px 32px;
+      text-align: left;
+    }
+
+    .audio-player-label {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 14px;
+    }
+
+    .audio-player-card audio {
+      width: 100%;
+      accent-color: var(--red);
+    }
+
+    .audio-player-download {
+      display: block;
+      margin-top: 14px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      transition: color 0.2s ease;
+    }
+
+    .audio-player-download:hover { color: var(--white); }
+
+    @media (max-width: 600px) {
+      .audio-player-card { padding: 20px; }
+    }
+
+
+    /* ==========================================================
        BAND MEMBERS — FLIP CARDS
        ========================================================== */
     .members-section {
@@ -1080,6 +1155,27 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+
+  <!-- ON-AIR / AUDIO INTERVIEW -->
+  <section class="press-section">
+    <div class="inner">
+      <div class="press-intro">
+        <span class="label reveal">On Air</span>
+        <h2 class="reveal delay-1">Hear the interview.</h2>
+        <p class="reveal delay-2">Michael sat down with Radio Northern Beaches on 20 July 2026 for a 28-minute chat about the band, the show, and what's next for The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span></p>
+      </div>
+      <div class="audio-player-card reveal delay-3">
+        <div class="audio-player-label">Radio Northern Beaches — 20 July 2026</div>
+        <audio controls preload="none">
+          <source src="audio/sods-interview-rnb-20jul2026.mp3" type="audio/mpeg">
+          Your browser doesn't support inline audio.
+          <a href="audio/sods-interview-rnb-20jul2026.mp3">Download the interview</a> to listen instead.
+        </audio>
+        <a class="audio-player-download" href="audio/sods-interview-rnb-20jul2026.mp3" download>Download MP3</a>
+      </div>
     </div>
   </section>
 
