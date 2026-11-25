@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — The S.O.D.S</title>
-  <meta name="description" content="Meet the band behind The S.O.D.S four experienced musicians bringing the Dire Straits catalogue to life on stages across Sydney and beyond.">
+  <title>About — The Songs of Dire Straits</title>
+  <meta name="description" content="Meet the band behind The Songs of Dire Straits four experienced musicians bringing the Dire Straits catalogue to life on stages across Sydney and beyond.">
 
   <style>
     *, *::before, *::after {
@@ -393,91 +393,6 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--grey);
-    }
-
-
-    /* ==========================================================
-       PROOF IMAGES SECTION
-       ========================================================== */
-    .proof-section {
-      padding: 0 0 100px;
-      background: var(--black);
-    }
-
-
-    /* ==========================================================
-       ON-AIR / AUDIO SECTION
-       ========================================================== */
-    .press-section {
-      padding: 100px 0;
-      background: var(--dark);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-      scroll-margin-top: 84px;
-    }
-
-    .press-intro {
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
-    .press-intro h2 {
-      font-family: 'Georgia', serif;
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-
-    .press-intro p {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--grey);
-    }
-
-    .audio-player-card {
-      max-width: 640px;
-      margin: 40px auto 0;
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--red);
-      padding: 28px 32px;
-      text-align: left;
-    }
-
-    .audio-player-label {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 14px;
-    }
-
-    .audio-player-card audio {
-      width: 100%;
-      accent-color: var(--red);
-    }
-
-    .audio-player-download {
-      display: block;
-      margin-top: 14px;
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--grey);
-      transition: color 0.2s ease;
-    }
-
-    .audio-player-download:hover { color: var(--white); }
-
-    @media (max-width: 600px) {
-      .audio-player-card { padding: 20px; }
     }
 
 
@@ -1070,85 +985,6 @@
       .footer-bottom { flex-direction: column; align-items: flex-start; }
       .bio-modal-content { padding: 28px 20px; }
     }
-    /* ==========================================================
-       LISTEN WIDGET (HEADER)
-       ========================================================== */
-    .nav-wrap { display: flex; align-items: center; gap: 22px; }
-
-    .listen-widget { position: relative; display: flex; align-items: center; }
-
-    .listen-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 50%;
-      cursor: pointer;
-      color: var(--grey);
-      position: relative;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .listen-btn:hover,
-    .listen-btn:focus-visible,
-    .listen-widget:hover .listen-btn,
-    .listen-widget:focus-within .listen-btn { color: var(--white); border-color: var(--red); }
-
-    .listen-btn.playing { color: var(--red); border-color: var(--red); background: rgba(196,32,32,0.12); }
-
-    .listen-icon { width: 16px; height: 16px; fill: currentColor; }
-
-    .listen-bars {
-      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-      display: none; align-items: flex-end; gap: 2px; height: 8px;
-    }
-
-    .listen-btn.playing .listen-bars { display: flex; }
-
-    .listen-bars span { width: 2px; background: var(--red); animation: listen-bar 0.9s ease-in-out infinite; }
-    .listen-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
-    .listen-bars span:nth-child(2) { height: 8px; animation-delay: 0.2s; }
-    .listen-bars span:nth-child(3) { height: 5px; animation-delay: 0.4s; }
-
-    @keyframes listen-bar { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
-
-    .listen-popover {
-      position: absolute; top: calc(100% + 14px); right: 0;
-      width: 320px;
-      background: var(--dark2, #141414);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--red);
-      padding: 16px;
-      z-index: 10000;
-      opacity: 0; visibility: hidden; transform: translateY(-6px);
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    }
-
-    .listen-widget:hover .listen-popover,
-    .listen-widget:focus-within .listen-popover,
-    .listen-popover.open { opacity: 1; visibility: visible; transform: translateY(0); }
-
-    .listen-popover-label {
-      display: block;
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 8px;
-    }
-
-    .listen-popover-text {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 12px; line-height: 1.6;
-      color: var(--grey);
-      margin-bottom: 12px;
-    }
-
-    .listen-popover audio { width: 100%; accent-color: var(--red); }
-
-    @media (max-width: 768px) {
-      .listen-popover { right: -12px; width: 280px; }
-    }
-
   </style>
   <link rel="icon" type="image/png" href="SODS-Pick-White01.png">
 </head>
@@ -1161,7 +997,7 @@
         <span class="logo-the">The</span>
         <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
       </a>
-      <nav aria-label="Main navigation" class="nav-wrap">
+      <nav aria-label="Main navigation">
         <ul class="site-nav">
           <li><a href="index.html">Home</a></li>
           <li><a href="watch.html">Watch</a></li>
@@ -1171,20 +1007,6 @@
           <li><a href="about.html" class="active">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <div class="listen-widget">
-          <button class="listen-btn" id="listen-btn" type="button" aria-label="Listen to our radio interview" aria-haspopup="true" aria-expanded="false">
-            <svg class="listen-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
-            <span class="listen-bars" aria-hidden="true"><span></span><span></span><span></span></span>
-          </button>
-          <div class="listen-popover" id="listen-popover" role="dialog" aria-label="Radio interview player">
-            <span class="listen-popover-label">On Air</span>
-            <p class="listen-popover-text">Neville &amp; Michael on Radio Northern Beaches — 20 July 2026. Click the icon to listen.</p>
-            <audio id="listen-audio" controls preload="none">
-              <source src="audio/sods-interview-rnb-20jul2026.mp3" type="audio/mpeg">
-              <a href="audio/sods-interview-rnb-20jul2026.mp3">Download the interview</a>
-            </audio>
-          </div>
-        </div>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -1209,7 +1031,7 @@
     <div class="page-hero-inner">
       <span class="label reveal">The Band</span>
       <h1 class="reveal delay-1">Four musicians.<br>One catalogue.</h1>
-      <p class="reveal delay-2">The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> are a Sydney-based live act built around the music of Dire Straits performed with the energy, precision, and respect the catalogue demands.</p>
+      <p class="reveal delay-2">The Songs of Dire Straits are a Sydney-based live act built around the music of Dire Straits performed with the energy, precision, and respect the catalogue demands.</p>
     </div>
   </section>
 
@@ -1220,13 +1042,13 @@
       <div class="bio-grid">
 
         <div class="bio-image reveal">
-          <img src="SODS-Pottery-OnStage01.jpeg" alt="The S.O.D.S live on stage">
+          <img src="SODS-Pottery-OnStage01.jpeg" alt="The Songs of Dire Straits live on stage">
         </div>
 
         <div class="bio-text">
           <span class="label reveal">Our Story</span>
           <h2 class="reveal delay-1">Built for the stage.<br>Driven by the music.</h2>
-          <p class="reveal delay-2">The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> came together in 2023 with a clear purpose to perform the music of Dire Straits the way it deserves to be heard. Live, loud, and with the groove intact.</p>
+          <p class="reveal delay-2">The Songs of Dire Straits came together in 2023 with a clear purpose to perform the music of Dire Straits the way it deserves to be heard. Live, loud, and with the groove intact.</p>
           <p class="reveal delay-2">From the very first show, the response was immediate. Sold-out theatre nights, festival main stages, and repeat bookings from venues who knew they'd found something that worked. The band don't just play the songs they build a show around them, structured across three sets that take audiences on a complete journey from first note to final chord.</p>
           <p class="reveal delay-3">This isn't a note-for-note recreation. It's four experienced musicians bringing their own energy and commitment to a catalogue that earns it and audiences who've seen the show more than once will tell you it hits differently every time.</p>
 
@@ -1248,35 +1070,8 @@
 
       </div>
 
-    </div>
-  </section>
-
-
-  <!-- ON-AIR / AUDIO INTERVIEW -->
-  <section class="press-section" id="interview">
-    <div class="inner">
-      <div class="press-intro">
-        <span class="label reveal">On Air</span>
-        <h2 class="reveal delay-1">Hear the interview.</h2>
-        <p class="reveal delay-2">Neville and Michael sat down with Radio Northern Beaches on 20 July 2026 for a 28-minute chat about the band, the show, and what's next for The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span></p>
-      </div>
-      <div class="audio-player-card reveal delay-3">
-        <div class="audio-player-label">Radio Northern Beaches — 20 July 2026</div>
-        <audio id="about-interview-audio" controls preload="none">
-          <source src="audio/sods-interview-rnb-20jul2026.mp3" type="audio/mpeg">
-          Your browser doesn't support inline audio.
-          <a href="audio/sods-interview-rnb-20jul2026.mp3">Download the interview</a> to listen instead.
-        </audio>
-        <a class="audio-player-download" href="audio/sods-interview-rnb-20jul2026.mp3" download>Download MP3</a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- PROOF IMAGES -->
-  <section class="proof-section">
-    <div class="inner">
-      <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <!-- Proof images — full width below bio grid -->
+      <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:48px;">
         <div style="overflow:hidden; aspect-ratio:1/1;">
           <img src="SODS-PotteryLane-SoldOut.jpeg" alt="Pottery Lane Performance Space — Sold Out" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block; filter:brightness(0.9);">
         </div>
@@ -1284,6 +1079,7 @@
           <img src="SODS-Nev-Mike-RadioInterview01.jpeg" alt="Neville and Michael — radio interview" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block; filter:brightness(0.9);">
         </div>
       </div>
+
     </div>
   </section>
 
@@ -1457,7 +1253,7 @@
     <div class="booking-inner">
       <span class="label reveal">Get In Touch</span>
       <div class="booking-divider reveal delay-1"></div>
-      <h2 class="booking-headline reveal delay-1">Ready to book<br>The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span>?</h2>
+      <h2 class="booking-headline reveal delay-1">Ready to book<br>The Songs of Dire Straits?</h2>
       <p class="booking-body reveal delay-2">Proven live act. Repeat bookings. A catalogue audiences already know and love. Let's make it happen.</p>
       <div class="reveal delay-3">
         <a href="contact.html" class="btn">Enquire Now</a>
@@ -1471,7 +1267,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The S.O.D.S" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
+          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The Songs of Dire Straits" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
           <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
           <p class="footer-credibility">Sold-out shows. Festival stages.<br>Repeat bookings across Sydney and beyond.</p>
         </div>
@@ -1534,65 +1330,6 @@
       hamburger.setAttribute('aria-expanded', isOpen);
     });
 
-    var LISTEN_KEY = 'sodsInterviewProgress';
-    function listenGetSaved() {
-      try {
-        var v = parseFloat(localStorage.getItem(LISTEN_KEY));
-        return isNaN(v) ? 0 : v;
-      } catch (e) { return 0; }
-    }
-    function listenSave(t) {
-      try { localStorage.setItem(LISTEN_KEY, String(t)); } catch (e) {}
-    }
-    function wireInterviewAudio(audioEl, otherEl) {
-      if (!audioEl) return;
-      audioEl.addEventListener('loadedmetadata', function () {
-        if (audioEl.currentTime < 1) {
-          var saved = listenGetSaved();
-          if (saved > 1 && saved < audioEl.duration - 3) audioEl.currentTime = saved;
-        }
-      });
-      audioEl.addEventListener('play', function () {
-        if (otherEl && !otherEl.paused) otherEl.pause();
-      });
-      audioEl.addEventListener('pause', function () { listenSave(audioEl.currentTime); });
-      audioEl.addEventListener('ended', function () { listenSave(0); });
-      audioEl.addEventListener('timeupdate', function () {
-        if (Math.floor(audioEl.currentTime) % 3 === 0) listenSave(audioEl.currentTime);
-      });
-    }
-
-    var listenBtn = document.getElementById('listen-btn');
-    var listenAudio = document.getElementById('listen-audio');
-    var listenPopover = document.getElementById('listen-popover');
-    var aboutAudio = document.getElementById('about-interview-audio');
-
-    wireInterviewAudio(listenAudio, aboutAudio);
-    wireInterviewAudio(aboutAudio, listenAudio);
-
-    if (listenBtn && listenAudio) {
-      listenBtn.addEventListener('click', function () {
-        if (listenAudio.paused) {
-          listenAudio.play();
-        } else {
-          listenAudio.pause();
-        }
-      });
-      listenAudio.addEventListener('play', function () {
-        listenBtn.classList.add('playing');
-        listenBtn.setAttribute('aria-expanded', 'true');
-        if (listenPopover) listenPopover.classList.add('open');
-      });
-      listenAudio.addEventListener('pause', function () {
-        listenBtn.classList.remove('playing');
-      });
-    }
-
-    window.addEventListener('pagehide', function () {
-      if (listenAudio && !listenAudio.paused) listenSave(listenAudio.currentTime);
-      if (aboutAudio && !aboutAudio.paused) listenSave(aboutAudio.currentTime);
-    });
-
     mobileMenu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         isOpen = false;
@@ -1628,7 +1365,7 @@
         name: 'Neville Kaye',
         quote: '"Music is my religion."',
         quoteAttr: '',
-        bio: '<p>Neville Kaye is a Sydney-based singer-songwriter and guitarist, originally from Johannesburg, South Africa. Since picking up the guitar at 18, he has built a prolific independent career, releasing 16 albums across rock, jazz, and contemporary styles.</p><p>His songwriting has earned international recognition, including the L.A. Music Award for Best Classic Rock Artist, and multiple Australian Songwriting Awards. In 2022 he took first place at the ASA Awards for his jazz composition Dance On A Summer Night.</p><p>In 2025, Neville released his final solo album, turning his full attention to the stage. As the frontman of The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span>, he brings one of rock\'s most iconic catalogues to life with authenticity, energy, and his own unmistakable voice.</p>'
+        bio: '<p>Neville Kaye is a Sydney-based singer-songwriter and guitarist, originally from Johannesburg, South Africa. Since picking up the guitar at 18, he has built a prolific independent career, releasing 16 albums across rock, jazz, and contemporary styles.</p><p>His songwriting has earned international recognition, including the L.A. Music Award for Best Classic Rock Artist, and multiple Australian Songwriting Awards. In 2022 he took first place at the ASA Awards for his jazz composition Dance On A Summer Night.</p><p>In 2025, Neville released his final solo album, turning his full attention to the stage. As the frontman of The Songs of Dire Straits, he brings one of rock\'s most iconic catalogues to life with authenticity, energy, and his own unmistakable voice.</p>'
       },
       richie: {
         photo: 'SODS-Pottery_Rich02.jpeg',
@@ -1636,7 +1373,7 @@
         name: 'Richie Wienburg',
         quote: '"Drugs are bad. M\'kay."',
         quoteAttr: '',
-        bio: '<p>Richie Wienburg is a Sydney-based drummer and backing vocalist, known for his dynamic, feel-driven playing and instinctive musicality. Originally from South Africa, Richie picked up the drums at 19 and quickly immersed himself in the live music scene with Cape Town alternative rock band The Damn Pesky Demons.</p><p>Entirely self-taught, he made an immediate impact, winning Best Drummer at a local battle-of-the-bands competition just four weeks after starting. The band performed regularly over four years, blending originals with covers from Smashing Pumpkins, Red Hot Chili Peppers, and Nirvana.</p><p>After relocating to London, Richie stepped away from music for a number of years before returning behind the kit in 2022 as a founding member of Kodak Kids. He transitioned from an acoustic Pearl kit to a Roland electronic kit, bringing precision and versatility to his playing.</p><p>Richie now drives the live show for The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> with tight groove, energy, and musical sensitivity, anchoring the band while adding his own edge to every performance.</p>'
+        bio: '<p>Richie Wienburg is a Sydney-based drummer and backing vocalist, known for his dynamic, feel-driven playing and instinctive musicality. Originally from South Africa, Richie picked up the drums at 19 and quickly immersed himself in the live music scene with Cape Town alternative rock band The Damn Pesky Demons.</p><p>Entirely self-taught, he made an immediate impact, winning Best Drummer at a local battle-of-the-bands competition just four weeks after starting. The band performed regularly over four years, blending originals with covers from Smashing Pumpkins, Red Hot Chili Peppers, and Nirvana.</p><p>After relocating to London, Richie stepped away from music for a number of years before returning behind the kit in 2022 as a founding member of Kodak Kids. He transitioned from an acoustic Pearl kit to a Roland electronic kit, bringing precision and versatility to his playing.</p><p>Richie now drives the live show for The Songs of Dire Straits with tight groove, energy, and musical sensitivity, anchoring the band while adding his own edge to every performance.</p>'
       },
       chris: {
         photo: 'SODS-Pottery_Chris02.jpeg',
@@ -1652,7 +1389,7 @@
         name: 'Michael Samuel',
         quote: '"Peace, love and rock \'n\' roll!"',
         quoteAttr: '',
-        bio: '<p>Michael Samuel is a Sydney-based guitarist, vocalist, and multi-instrumentalist, born in Hong Kong and raised in London before making Sydney home at the age of eleven. He picked up the guitar at eight, shaped early on by Bruce Springsteen and The Beatles, and discovered Dire Straits at twelve, a catalogue that would stay with him. By his final college recital in 2014, Sultans of Swing had made it onto the setlist.</p><p>Before joining The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span>, Michael played with Eagles tribute act Desperado, performed alongside Johnny Cash tribute singer Monty Cotton, and spent seven years with originals band Mass Landing. His most memorable gig to date was a charity event in Xian, China in 2019.</p><p>He currently juggles The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> with two other active projects: Staceys Got A Gun and Echo Beats. When he\'s not on stage, Michael works as a data entry administrator, a job he\'s held for over eleven years. He\'ll tell you voice impersonations are his backup plan if music ever stops working out.</p><p>A good night for Michael is simple: the sound is balanced, everyone\'s playing well, and the audience is completely in it.</p>'
+        bio: '<p>Michael Samuel is a Sydney-based guitarist, vocalist, and multi-instrumentalist, born in Hong Kong and raised in London before making Sydney home at the age of eleven. He picked up the guitar at eight, shaped early on by Bruce Springsteen and The Beatles, and discovered Dire Straits at twelve, a catalogue that would stay with him. By his final college recital in 2014, Sultans of Swing had made it onto the setlist.</p><p>Before joining The Songs of Dire Straits, Michael played with Eagles tribute act Desperado, performed alongside Johnny Cash tribute singer Monty Cotton, and spent seven years with originals band Mass Landing. His most memorable gig to date was a charity event in Xian, China in 2019.</p><p>He currently juggles The Songs of Dire Straits with two other active projects: Staceys Got A Gun and Echo Beats. When he\'s not on stage, Michael works as a data entry administrator, a job he\'s held for over eleven years. He\'ll tell you voice impersonations are his backup plan if music ever stops working out.</p><p>A good night for Michael is simple: the sound is balanced, everyone\'s playing well, and the audience is completely in it.</p>'
       }
     };
 

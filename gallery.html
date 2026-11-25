@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery — The S.O.D.S</title>
-  <meta name="description" content="Photos from The S.O.D.S live shows theatre nights, festival stages, and club performances across Sydney.">
+  <title>Gallery — The Songs of Dire Straits</title>
+  <meta name="description" content="Photos from The Songs of Dire Straits live shows theatre nights, festival stages, and club performances across Sydney.">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -359,85 +359,6 @@
       .page-hero { padding: 120px 0 56px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
-    /* ==========================================================
-       LISTEN WIDGET (HEADER)
-       ========================================================== */
-    .nav-wrap { display: flex; align-items: center; gap: 22px; }
-
-    .listen-widget { position: relative; display: flex; align-items: center; }
-
-    .listen-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 50%;
-      cursor: pointer;
-      color: var(--grey);
-      position: relative;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .listen-btn:hover,
-    .listen-btn:focus-visible,
-    .listen-widget:hover .listen-btn,
-    .listen-widget:focus-within .listen-btn { color: var(--white); border-color: var(--red); }
-
-    .listen-btn.playing { color: var(--red); border-color: var(--red); background: rgba(196,32,32,0.12); }
-
-    .listen-icon { width: 16px; height: 16px; fill: currentColor; }
-
-    .listen-bars {
-      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-      display: none; align-items: flex-end; gap: 2px; height: 8px;
-    }
-
-    .listen-btn.playing .listen-bars { display: flex; }
-
-    .listen-bars span { width: 2px; background: var(--red); animation: listen-bar 0.9s ease-in-out infinite; }
-    .listen-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
-    .listen-bars span:nth-child(2) { height: 8px; animation-delay: 0.2s; }
-    .listen-bars span:nth-child(3) { height: 5px; animation-delay: 0.4s; }
-
-    @keyframes listen-bar { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
-
-    .listen-popover {
-      position: absolute; top: calc(100% + 14px); right: 0;
-      width: 320px;
-      background: var(--dark2, #141414);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--red);
-      padding: 16px;
-      z-index: 10000;
-      opacity: 0; visibility: hidden; transform: translateY(-6px);
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    }
-
-    .listen-widget:hover .listen-popover,
-    .listen-widget:focus-within .listen-popover,
-    .listen-popover.open { opacity: 1; visibility: visible; transform: translateY(0); }
-
-    .listen-popover-label {
-      display: block;
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 8px;
-    }
-
-    .listen-popover-text {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 12px; line-height: 1.6;
-      color: var(--grey);
-      margin-bottom: 12px;
-    }
-
-    .listen-popover audio { width: 100%; accent-color: var(--red); }
-
-    @media (max-width: 768px) {
-      .listen-popover { right: -12px; width: 280px; }
-    }
-
   </style>
   <link rel="icon" type="image/png" href="SODS-Pick-White01.png">
 </head>
@@ -450,7 +371,7 @@
         <span class="logo-the">The</span>
         <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
       </a>
-      <nav aria-label="Main navigation" class="nav-wrap">
+      <nav aria-label="Main navigation">
         <ul class="site-nav">
           <li><a href="index.html">Home</a></li>
           <li><a href="watch.html">Watch</a></li>
@@ -460,20 +381,6 @@
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <div class="listen-widget">
-          <button class="listen-btn" id="listen-btn" type="button" aria-label="Listen to our radio interview" aria-haspopup="true" aria-expanded="false">
-            <svg class="listen-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
-            <span class="listen-bars" aria-hidden="true"><span></span><span></span><span></span></span>
-          </button>
-          <div class="listen-popover" id="listen-popover" role="dialog" aria-label="Radio interview player">
-            <span class="listen-popover-label">On Air</span>
-            <p class="listen-popover-text">Neville &amp; Michael on Radio Northern Beaches — 20 July 2026. Click the icon to listen.</p>
-            <audio id="listen-audio" controls preload="none">
-              <source src="audio/sods-interview-rnb-20jul2026.mp3" type="audio/mpeg">
-              <a href="audio/sods-interview-rnb-20jul2026.mp3">Download the interview</a>
-            </audio>
-          </div>
-        </div>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -513,7 +420,7 @@
         <!-- Varying aspect ratios create the editorial feel -->
 
         <div class="gallery-item reveal" onclick="openLightbox(0)">
-          <img src="SODS-Pottery-OnStage01.jpeg" alt="The S.O.D.S live on stage Pottery Lane" loading="lazy">
+          <img src="SODS-Pottery-OnStage01.jpeg" alt="The Songs of Dire Straits live on stage Pottery Lane" loading="lazy">
           <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
         </div>
 
@@ -528,7 +435,7 @@
         </div>
 
         <div class="gallery-item reveal" onclick="openLightbox(3)">
-          <img src="SODS-PotteryStage_02.jpg" alt="The S.O.D.S full band on stage" loading="lazy">
+          <img src="SODS-PotteryStage_02.jpg" alt="The Songs of Dire Straits full band on stage" loading="lazy">
           <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
         </div>
 
@@ -548,7 +455,7 @@
         </div>
 
         <div class="gallery-item reveal delay-1" onclick="openLightbox(7)">
-          <img src="SODS-Pottery_BandSelfie01.jpg" alt="The S.O.D.S band photo" loading="lazy">
+          <img src="SODS-Pottery_BandSelfie01.jpg" alt="The Songs of Dire Straits band photo" loading="lazy">
           <div class="gallery-item-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
         </div>
 
@@ -665,7 +572,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The S.O.D.S" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
+          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The Songs of Dire Straits" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
           <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
           <p class="footer-credibility">Sold-out shows. Festival stages.<br>Repeat bookings across Sydney and beyond.</p>
         </div>
@@ -727,65 +634,6 @@
       hamburger.classList.toggle('open', isOpen);
       mobileMenu.classList.toggle('open', isOpen);
       hamburger.setAttribute('aria-expanded', isOpen);
-    });
-
-    var LISTEN_KEY = 'sodsInterviewProgress';
-    function listenGetSaved() {
-      try {
-        var v = parseFloat(localStorage.getItem(LISTEN_KEY));
-        return isNaN(v) ? 0 : v;
-      } catch (e) { return 0; }
-    }
-    function listenSave(t) {
-      try { localStorage.setItem(LISTEN_KEY, String(t)); } catch (e) {}
-    }
-    function wireInterviewAudio(audioEl, otherEl) {
-      if (!audioEl) return;
-      audioEl.addEventListener('loadedmetadata', function () {
-        if (audioEl.currentTime < 1) {
-          var saved = listenGetSaved();
-          if (saved > 1 && saved < audioEl.duration - 3) audioEl.currentTime = saved;
-        }
-      });
-      audioEl.addEventListener('play', function () {
-        if (otherEl && !otherEl.paused) otherEl.pause();
-      });
-      audioEl.addEventListener('pause', function () { listenSave(audioEl.currentTime); });
-      audioEl.addEventListener('ended', function () { listenSave(0); });
-      audioEl.addEventListener('timeupdate', function () {
-        if (Math.floor(audioEl.currentTime) % 3 === 0) listenSave(audioEl.currentTime);
-      });
-    }
-
-    var listenBtn = document.getElementById('listen-btn');
-    var listenAudio = document.getElementById('listen-audio');
-    var listenPopover = document.getElementById('listen-popover');
-    var aboutAudio = document.getElementById('about-interview-audio');
-
-    wireInterviewAudio(listenAudio, aboutAudio);
-    wireInterviewAudio(aboutAudio, listenAudio);
-
-    if (listenBtn && listenAudio) {
-      listenBtn.addEventListener('click', function () {
-        if (listenAudio.paused) {
-          listenAudio.play();
-        } else {
-          listenAudio.pause();
-        }
-      });
-      listenAudio.addEventListener('play', function () {
-        listenBtn.classList.add('playing');
-        listenBtn.setAttribute('aria-expanded', 'true');
-        if (listenPopover) listenPopover.classList.add('open');
-      });
-      listenAudio.addEventListener('pause', function () {
-        listenBtn.classList.remove('playing');
-      });
-    }
-
-    window.addEventListener('pagehide', function () {
-      if (listenAudio && !listenAudio.paused) listenSave(listenAudio.currentTime);
-      if (aboutAudio && !aboutAudio.paused) listenSave(aboutAudio.currentTime);
     });
     mobileMenu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {

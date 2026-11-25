@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Experience — The S.O.D.S</title>
-  <meta name="description" content="The S.O.D.S live experience three sets, one complete journey through the Dire Straits catalogue. Built for the stage.">
+  <title>The Experience — The Songs of Dire Straits</title>
+  <meta name="description" content="The Songs of Dire Straits live experience three sets, one complete journey through the Dire Straits catalogue. Built for the stage.">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -727,85 +727,6 @@
       .booking-ctas { flex-direction: column; align-items: center; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
-    /* ==========================================================
-       LISTEN WIDGET (HEADER)
-       ========================================================== */
-    .nav-wrap { display: flex; align-items: center; gap: 22px; }
-
-    .listen-widget { position: relative; display: flex; align-items: center; }
-
-    .listen-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 50%;
-      cursor: pointer;
-      color: var(--grey);
-      position: relative;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .listen-btn:hover,
-    .listen-btn:focus-visible,
-    .listen-widget:hover .listen-btn,
-    .listen-widget:focus-within .listen-btn { color: var(--white); border-color: var(--red); }
-
-    .listen-btn.playing { color: var(--red); border-color: var(--red); background: rgba(196,32,32,0.12); }
-
-    .listen-icon { width: 16px; height: 16px; fill: currentColor; }
-
-    .listen-bars {
-      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-      display: none; align-items: flex-end; gap: 2px; height: 8px;
-    }
-
-    .listen-btn.playing .listen-bars { display: flex; }
-
-    .listen-bars span { width: 2px; background: var(--red); animation: listen-bar 0.9s ease-in-out infinite; }
-    .listen-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
-    .listen-bars span:nth-child(2) { height: 8px; animation-delay: 0.2s; }
-    .listen-bars span:nth-child(3) { height: 5px; animation-delay: 0.4s; }
-
-    @keyframes listen-bar { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
-
-    .listen-popover {
-      position: absolute; top: calc(100% + 14px); right: 0;
-      width: 320px;
-      background: var(--dark2, #141414);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--red);
-      padding: 16px;
-      z-index: 10000;
-      opacity: 0; visibility: hidden; transform: translateY(-6px);
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    }
-
-    .listen-widget:hover .listen-popover,
-    .listen-widget:focus-within .listen-popover,
-    .listen-popover.open { opacity: 1; visibility: visible; transform: translateY(0); }
-
-    .listen-popover-label {
-      display: block;
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 8px;
-    }
-
-    .listen-popover-text {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 12px; line-height: 1.6;
-      color: var(--grey);
-      margin-bottom: 12px;
-    }
-
-    .listen-popover audio { width: 100%; accent-color: var(--red); }
-
-    @media (max-width: 768px) {
-      .listen-popover { right: -12px; width: 280px; }
-    }
-
   </style>
   <link rel="icon" type="image/png" href="SODS-Pick-White01.png">
 </head>
@@ -818,7 +739,7 @@
         <span class="logo-the">The</span>
         <span class="logo-name">S<span>.</span>O<span>.</span>D<span>.</span>S<span>.</span></span>
       </a>
-      <nav aria-label="Main navigation" class="nav-wrap">
+      <nav aria-label="Main navigation">
         <ul class="site-nav">
           <li><a href="index.html">Home</a></li>
           <li><a href="watch.html">Watch</a></li>
@@ -828,20 +749,6 @@
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <div class="listen-widget">
-          <button class="listen-btn" id="listen-btn" type="button" aria-label="Listen to our radio interview" aria-haspopup="true" aria-expanded="false">
-            <svg class="listen-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
-            <span class="listen-bars" aria-hidden="true"><span></span><span></span><span></span></span>
-          </button>
-          <div class="listen-popover" id="listen-popover" role="dialog" aria-label="Radio interview player">
-            <span class="listen-popover-label">On Air</span>
-            <p class="listen-popover-text">Neville &amp; Michael on Radio Northern Beaches — 20 July 2026. Click the icon to listen.</p>
-            <audio id="listen-audio" controls preload="none">
-              <source src="audio/sods-interview-rnb-20jul2026.mp3" type="audio/mpeg">
-              <a href="audio/sods-interview-rnb-20jul2026.mp3">Download the interview</a>
-            </audio>
-          </div>
-        </div>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -867,7 +774,7 @@
     <div class="page-hero-inner">
       <span class="label reveal">The Live Experience</span>
       <h1 class="reveal delay-1">More than a setlist.<br>A complete show.</h1>
-      <p class="reveal delay-2">The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> don't just perform songs they build an evening. From the first groove to the final note, every show is structured to take the audience on a journey through one of rock's greatest catalogues.</p>
+      <p class="reveal delay-2">The Songs of Dire Straits don't just perform songs they build an evening. From the first groove to the final note, every show is structured to take the audience on a journey through one of rock's greatest catalogues.</p>
       <div class="page-hero-ctas reveal delay-3">
         <a href="shows.html" class="btn">See Upcoming Shows</a>
         <a href="contact.html" class="btn-ghost">Book The Band</a>
@@ -885,8 +792,8 @@
           <h2 class="reveal delay-1">Built for the stage.<br><em>Driven by the music.</em></h2>
         </div>
         <div class="intro-right">
-          <p class="reveal delay-2">Most tribute acts play the songs. The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> build a show. The difference is in the structure three carefully sequenced sets that move through the Dire Straits catalogue with intention, building energy, atmosphere, and emotional weight as the night progresses.</p>
-          <p class="reveal delay-3">The arrangements stay true to the originals while the performance brings something alive that a recording never can. This is music that was always meant to be heard live and that's exactly where The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> deliver it.</p>
+          <p class="reveal delay-2">Most tribute acts play the songs. The Songs of Dire Straits build a show. The difference is in the structure three carefully sequenced sets that move through the Dire Straits catalogue with intention, building energy, atmosphere, and emotional weight as the night progresses.</p>
+          <p class="reveal delay-3">The arrangements stay true to the originals while the performance brings something alive that a recording never can. This is music that was always meant to be heard live and that's exactly where The Songs of Dire Straits deliver it.</p>
         </div>
       </div>
     </div>
@@ -960,7 +867,7 @@
       <div class="formats-header">
         <span class="label reveal">Flexible Formats</span>
         <h2 class="reveal delay-1">Built around your venue.</h2>
-        <p class="reveal delay-2">The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> offer three show formats to suit different venue requirements, event lengths, and audience sizes. Every format delivers the same quality the structure adapts to your night.</p>
+        <p class="reveal delay-2">The Songs of Dire Straits offer three show formats to suit different venue requirements, event lengths, and audience sizes. Every format delivers the same quality the structure adapts to your night.</p>
       </div>
 
       <div class="formats-grid">
@@ -990,7 +897,7 @@
         <div class="format-card reveal delay-2">
           <span class="format-number">03</span>
           <h3 class="format-name">Three Sets</h3>
-          <p class="format-desc">The full S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> experience. Three structured sets The Build, The Payoff, and The Finale that take the audience on a complete journey through the catalogue. Designed for theatre nights, headline shows, and venues that want to give their audience a full evening.</p>
+          <p class="format-desc">The full Songs of Dire Straits experience. Three structured sets The Build, The Payoff, and The Finale that take the audience on a complete journey through the catalogue. Designed for theatre nights, headline shows, and venues that want to give their audience a full evening.</p>
           <div class="format-tags">
             <span class="format-tag">Theatre Shows</span>
             <span class="format-tag">Headline Nights</span>
@@ -1011,7 +918,7 @@
       <div class="acoustic-grid">
 
         <div class="acoustic-image reveal">
-          <img src="SODS-Pottery_BandSelfie01.jpg" alt="The S.O.D.S acoustic set">
+          <img src="SODS-Pottery_BandSelfie01.jpg" alt="The Songs of Dire Straits acoustic set">
         </div>
 
         <div class="acoustic-text">
@@ -1021,7 +928,7 @@
           </div>
           <h2 class="reveal delay-1">The Acoustic Set.</h2>
           <p class="reveal delay-2">Available as an optional addition to any booking, the acoustic set strips the show back to its essentials. Just the songs, the instruments, and the room.</p>
-          <p class="reveal delay-2">It's a different kind of power intimate, focused, and surprisingly effective in both smaller venues and festival environments. This is one of the key differentiators that sets The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> apart from other acts performing the same catalogue.</p>
+          <p class="reveal delay-2">It's a different kind of power intimate, focused, and surprisingly effective in both smaller venues and festival environments. This is one of the key differentiators that sets The Songs of Dire Straits apart from other acts performing the same catalogue.</p>
           <div class="acoustic-tags reveal delay-3">
             <span class="acoustic-tag">Festivals</span>
             <span class="acoustic-tag">Smaller Venues</span>
@@ -1041,7 +948,7 @@
       <div class="repertoire-header">
         <span class="label reveal">The Catalogue</span>
         <h2 class="reveal delay-1">A taste of what's<br>in the setlist.</h2>
-        <p class="reveal delay-2">The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> draw from the full Dire Straits catalogue. What you see below is just a sample the full setlist spans iconic hits, fan favourites, deep cuts, and selected Mark Knopfler material, tailored to every show.</p>
+        <p class="reveal delay-2">The Songs of Dire Straits draw from the full Dire Straits catalogue. What you see below is just a sample the full setlist spans iconic hits, fan favourites, deep cuts, and selected Mark Knopfler material, tailored to every show.</p>
       </div>
 
       <div class="repertoire-grid">
@@ -1085,7 +992,7 @@
       </div>
 
       <div class="repertoire-note reveal delay-1">
-        <p>These lists are just a taste. The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> draw from the full Dire Straits catalogue the setlist varies from show to show and is tailored to the venue, audience, and format. Specific requests can be discussed at the time of booking.</p>
+        <p>These lists are just a taste. The Songs of Dire Straits draw from the full Dire Straits catalogue the setlist varies from show to show and is tailored to the venue, audience, and format. Specific requests can be discussed at the time of booking.</p>
       </div>
     </div>
   </section>
@@ -1097,7 +1004,7 @@
       <div class="expect-header">
         <span class="label reveal">On The Night</span>
         <h2 class="reveal delay-1">What to expect.</h2>
-        <p class="reveal delay-2">Every S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> show is the same in the ways that matter, and different in the ways that keep it alive.</p>
+        <p class="reveal delay-2">Every show is the same in the ways that matter, and different in the ways that keep it alive.</p>
       </div>
 
       <div class="expect-grid">
@@ -1131,7 +1038,7 @@
             <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
           </div>
           <h3 class="expect-title">Reliable Delivery</h3>
-          <p class="expect-desc">Sold-out nights. Repeat bookings. Venues that call back. The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> deliver every single time.</p>
+          <p class="expect-desc">Sold-out nights. Repeat bookings. Venues that call back. The Songs of Dire Straits deliver every single time.</p>
         </div>
 
       </div>
@@ -1144,8 +1051,8 @@
     <div class="booking-inner">
       <span class="label reveal">Ready to Book</span>
       <div class="booking-divider reveal delay-1"></div>
-      <h2 class="booking-headline reveal delay-1">Bring The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span><br>to your venue.</h2>
-      <p class="booking-body reveal delay-2">Whether you're planning a theatre night, festival slot, club show, or private event The S<span style="color:#c42020;">.</span>O<span style="color:#c42020;">.</span>D<span style="color:#c42020;">.</span>S<span style="color:#c42020;">.</span> have the experience, the repertoire, and the live energy to make it memorable.</p>
+      <h2 class="booking-headline reveal delay-1">Bring The Songs of Dire Straits<br>to your venue.</h2>
+      <p class="booking-body reveal delay-2">Whether you're planning a theatre night, festival slot, club show, or private event The Songs of Dire Straits have the experience, the repertoire, and the live energy to make it memorable.</p>
       <div class="booking-ctas reveal delay-3">
         <a href="contact.html" class="btn">Enquire Now</a>
         <a href="shows.html" class="btn-ghost">See Upcoming Shows</a>
@@ -1159,7 +1066,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The S.O.D.S" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
+          <img src="SODS_Strat_White_Transparent_Logo_2.png" alt="The Songs of Dire Straits" style="width:180px; opacity:0.85; display:block; margin-bottom:20px;">
           <p class="footer-tagline">Dire Straits. Reimagined for the stage.</p>
           <p class="footer-credibility">Sold-out shows. Festival stages.<br>Repeat bookings across Sydney and beyond.</p>
         </div>
@@ -1220,65 +1127,6 @@
       hamburger.classList.toggle('open', isOpen);
       mobileMenu.classList.toggle('open', isOpen);
       hamburger.setAttribute('aria-expanded', isOpen);
-    });
-
-    var LISTEN_KEY = 'sodsInterviewProgress';
-    function listenGetSaved() {
-      try {
-        var v = parseFloat(localStorage.getItem(LISTEN_KEY));
-        return isNaN(v) ? 0 : v;
-      } catch (e) { return 0; }
-    }
-    function listenSave(t) {
-      try { localStorage.setItem(LISTEN_KEY, String(t)); } catch (e) {}
-    }
-    function wireInterviewAudio(audioEl, otherEl) {
-      if (!audioEl) return;
-      audioEl.addEventListener('loadedmetadata', function () {
-        if (audioEl.currentTime < 1) {
-          var saved = listenGetSaved();
-          if (saved > 1 && saved < audioEl.duration - 3) audioEl.currentTime = saved;
-        }
-      });
-      audioEl.addEventListener('play', function () {
-        if (otherEl && !otherEl.paused) otherEl.pause();
-      });
-      audioEl.addEventListener('pause', function () { listenSave(audioEl.currentTime); });
-      audioEl.addEventListener('ended', function () { listenSave(0); });
-      audioEl.addEventListener('timeupdate', function () {
-        if (Math.floor(audioEl.currentTime) % 3 === 0) listenSave(audioEl.currentTime);
-      });
-    }
-
-    var listenBtn = document.getElementById('listen-btn');
-    var listenAudio = document.getElementById('listen-audio');
-    var listenPopover = document.getElementById('listen-popover');
-    var aboutAudio = document.getElementById('about-interview-audio');
-
-    wireInterviewAudio(listenAudio, aboutAudio);
-    wireInterviewAudio(aboutAudio, listenAudio);
-
-    if (listenBtn && listenAudio) {
-      listenBtn.addEventListener('click', function () {
-        if (listenAudio.paused) {
-          listenAudio.play();
-        } else {
-          listenAudio.pause();
-        }
-      });
-      listenAudio.addEventListener('play', function () {
-        listenBtn.classList.add('playing');
-        listenBtn.setAttribute('aria-expanded', 'true');
-        if (listenPopover) listenPopover.classList.add('open');
-      });
-      listenAudio.addEventListener('pause', function () {
-        listenBtn.classList.remove('playing');
-      });
-    }
-
-    window.addEventListener('pagehide', function () {
-      if (listenAudio && !listenAudio.paused) listenSave(listenAudio.currentTime);
-      if (aboutAudio && !aboutAudio.paused) listenSave(aboutAudio.currentTime);
     });
 
     mobileMenu.querySelectorAll('a').forEach(function (link) {
