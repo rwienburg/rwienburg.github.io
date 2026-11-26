@@ -347,10 +347,10 @@
     .hero {
       position: relative;
       width: 100%;
-      min-height: min(100vh, 860px);
+      min-height: min(100vh, 780px);
       display: flex;
       align-items: flex-end;
-      padding-bottom: 90px;
+      padding-bottom: 120px;
       padding-top: 64px;
       overflow: hidden;
     }
@@ -1109,7 +1109,7 @@
     @media (max-width: 600px) {
       .inner, .hero-content .inner { padding: 0 20px; }
       .site-footer { padding: 48px 20px 28px; }
-      .hero { min-height: 85vh; padding-bottom: 60px; }
+      .hero { min-height: 85vh; padding-bottom: 100px; }
       .hero-headline { font-size: 38px; }
       .hero-ctas { flex-direction: column; align-items: flex-start; }
       .position, .watch, .experience, .shows, .booking { padding: 72px 0; }
@@ -1136,6 +1136,24 @@
       .tm-section { padding: 72px 0; }
       .tm-grid { grid-template-columns: 1fr; gap: 20px; }
       .tm-card blockquote { font-size: 18px; }
+    }
+  
+    /* Testimonial ticker */
+    .hero-ticker { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; overflow: hidden; background: rgba(0,0,0,0.62); border-top: 1px solid rgba(255,255,255,0.1); padding: 20px 0; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+    .ticker-track { display: flex; width: max-content; animation: tickerMove 80s linear infinite; }
+    .hero-ticker:hover .ticker-track { animation-play-state: paused; }
+    .ticker-set { display: flex; flex-shrink: 0; }
+    .ticker-item { position: relative; white-space: nowrap; padding: 0 40px; font-family: 'Georgia', serif; font-style: italic; font-size: 17px; color: #fff; }
+    .ticker-item::after { content: ''; position: absolute; right: -3px; top: 50%; width: 6px; height: 6px; background: var(--red); transform: translateY(-50%) rotate(45deg); }
+    @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-ticker { overflow-x: auto; }
+      .ticker-track { animation: none; }
+      .ticker-set[aria-hidden="true"] { display: none; }
+    }
+    @media (max-width: 768px) {
+      .hero-ticker { padding: 16px 0; }
+      .ticker-item { font-size: 15px; padding: 0 28px; }
     }
   </style>
   <link rel="icon" type="image/png" href="SODS-Pick-White01.png">
@@ -1204,6 +1222,12 @@
           <a href="watch.html" class="btn">Watch Live</a>
           <a href="contact.html" class="btn-ghost">Book The Band</a>
         </div>
+      </div>
+    </div>
+      <div class="hero-ticker" role="region" aria-label="Comments from audiences">
+      <div class="ticker-track">
+        <div class="ticker-set"><span class="ticker-item">Congratulations on such a world class performance!</span><span class="ticker-item">Tight, articulate, musical. The real deal.</span><span class="ticker-item">Those guys were brilliant musicians!</span><span class="ticker-item">I would definitely see them again!</span><span class="ticker-item">Great musicianship. Great songs. Great night.</span><span class="ticker-item">Was a fabulous show! We loved it!</span><span class="ticker-item">You and your band really are exceptional.</span><span class="ticker-item">What a brilliant night and band.</span><span class="ticker-item">I&#39;m now calling myself a SODS junkie.</span><span class="ticker-item">The whole band was unbelievable! The musicianship!</span><span class="ticker-item">Lots of toe tapping and head bopping.</span><span class="ticker-item">Great vibe, crowd loved it, tunes sounded great.</span><span class="ticker-item">Where&#39;s the next one??</span><span class="ticker-item">Outstanding.</span></div>
+        <div class="ticker-set" aria-hidden="true"><span class="ticker-item">Congratulations on such a world class performance!</span><span class="ticker-item">Tight, articulate, musical. The real deal.</span><span class="ticker-item">Those guys were brilliant musicians!</span><span class="ticker-item">I would definitely see them again!</span><span class="ticker-item">Great musicianship. Great songs. Great night.</span><span class="ticker-item">Was a fabulous show! We loved it!</span><span class="ticker-item">You and your band really are exceptional.</span><span class="ticker-item">What a brilliant night and band.</span><span class="ticker-item">I&#39;m now calling myself a SODS junkie.</span><span class="ticker-item">The whole band was unbelievable! The musicianship!</span><span class="ticker-item">Lots of toe tapping and head bopping.</span><span class="ticker-item">Great vibe, crowd loved it, tunes sounded great.</span><span class="ticker-item">Where&#39;s the next one??</span><span class="ticker-item">Outstanding.</span></div>
       </div>
     </div>
   </section>
